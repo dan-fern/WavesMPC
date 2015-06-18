@@ -1,0 +1,388 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+                        
+  <meta http-equiv="content-type"
+ content="text/html; charset=ISO-8859-1">
+  <title>Urs Neumeier - Processing of wave data</title>
+                                                
+  <link rel="stylesheet" type="text/css" href="standard.css">
+</head>
+<body bgcolor="#eecc99" text="#000000" link="#0000ee" alink="#0000ee"
+ vlink="#551a8b">
+ 
+<div align="center"><big><big><b>Processing of wave data from pressure sensors</b></big></big><br>
+ </div>
+        <big><br>
+</big>
+<div align="center"><big>by Urs Neumeier</big><br>
+</div>
+<div align="center"><small><a href="http://neumeier.perso.ch/"><big>http://neumeier.perso.ch/</big></a></small><br>
+</div>
+<big><br>
+ <b>Introduction</b></big>        <br>
+    <br>
+    This set of routines processes data from pressure sensors to compensate
+the attenuation of pressure variations with depth and compute the standard
+(non-directional) <span class="nounderline"><a href="#parameters">wave parameters</a></span>.
+ These are Matlab routines, that means Matlab must be installed in order
+to use them.<br>
+     <br>
+     <b>wavesp.m</b> computes the <span class="nounderline"><a
+ href="#parameters">spectral wave-parameters</a></span> after correction
+of the pressure attenuation. If pr_corr.m and zero_crossing.m are on the matlab-path,
+the <span class="nounderline"><a href="#parameters">zero-crossing wave-parameters</a></span> 
+are also returned.<br>
+     <b>pr_corr.m</b> returns the attenuation-corrected water surface. It
+is called by wavesp.m for the zero-crossing wave-parameters.<br>
+     <b>zero_crossing.m</b> computes the <span class="nounderline"><a
+ href="#parameters">zero-crossing wave-parameters</a></span>.  It is called
+by wavesp.m.<br>
+     <br>
+    Full help how to use is included in the comments at the beginning of
+each routine.<br>
+  <b><br>
+ Disclaimer</b> &#8211; I have written these routines with care and I use them
+myself for my research. However, I cannot give any &nbsp;guarantee for the
+accuracy of their results.<br>
+         <br>
+        <big><br>
+ <b>Download</b></big>        <br>
+        <br>
+At <a href="http://neumeier.perso.ch/matlab/waves.html">http://neumeier.perso.ch/matlab/waves.html</a><br>
+        <br>
+        <big><br>
+ </big>       <b><big>Detailed description</big> </b> 
+<ul>
+     <li>  The routines use the standard calculations methods, as described
+in  <span class="nounderline"><a href="#Tucker">Tucker and Pitt (2001)</a></span>.They
+correct&nbsp;the attenuation of pressure variations with depth</li>
+   <li>  The input arguments are the uncorrected water heights above bed
+in metre, as obtained from the calibrated pressure-sensor data, the height
+of the pressure sensor above bed, the sampling frequency, and some possible
+options.</li>
+   <li>The attenuation correction is only applied over a given frequency
+range to avoid to over-amplify high frequency variations that do not correspond 
+to surface waves but are some noise. By default the correction is applied 
+over the range 0.05-0.33 Hz. This range can be modified by an input argument. 
+In addition, the maximal correction factor is set to 5 (this value may be 
+modified for some special cases, but this is not recommended). In order to 
+fully understand these concepts, the users should look at the correction factor
+returned by pr_corr with first argument an empty matrix.</li>
+   <li>  Traditionally, record lengths of a power of 2 were used to have
+an optimum computing speed in the Fast Fourier Transform algorithm. However,
+with the calculation power of modern personal computers, this restriction
+is not longer necessary, and wavesp and pr_corr perform fast enough with
+any record length.</li>
+ 
+</ul>
+  
+<ul>
+     <li><b>Wavesp </b>and zero_crossing ignore the first data column if
+all its values are between 720000 and 740000 (range of matlab date-time values).</li>
+   <li>Wavesp divides the input vector in overlapping segments that are processed 
+separately and the results of which are averaged. By default the segment length
+is 1/4 of the input-vector length. For short input vector, the number of
+segments can be reduced, e.g. by selecting a segment length of 1/2 (4th argument
+"2").</li>
+   <li>Wavesp called without output argument prints the wave parameters in 
+the matlab command window and create a figure with the spectral density of 
+the waves.</li>
+   <li>Wavesp returns as optional third output argument a 2-column matrix
+with the spectral density and the corresponding frequencies.</li>
+   <li>Wavesp accepts also as input a matrix or a cell array. The height
+of the sensor above bed can be either a scalar or an array with one value
+for each column of the matrix / each element of the cell array. This allows
+to process either an array of pressure sensors that were recorded in one
+file, or successive time-interval from the same pressure sensor.</li>
+   <li>An option of Wavesp selects which <span class="nounderline"><a
+ href="#parameters">wave parameters</a></span> are returned: some or all
+spectral parameters, all or none zero-crossing parameters.</li>
+ 
+</ul>
+   
+<ul>
+  <li><b>Pr_corr</b> return a vector with the same length than the input
+vector. The vector length does not have to be a power of 2. The input vector
+can contain NaN values (indicating missing data or emersion in intertidal
+setting). They will be ignored during the processing, but returned at the
+same position in the output vector.</li>
+  <li>Pr_corr divides the input vector in overlapping segments (by default 
+512 records long) that are processed separately and then recombined.</li>
+  <li>Pr_corr takes as input either a detrended sea surface elevation and 
+the mean water depth, or the sea-surface above bottom. The latter case, each 
+segment will be linearly detrended, corrected for attenuation, and the linear 
+trend added back before constructing the output vector. This usage is very
+powerful, because a time series of several hours can be processed in one
+call to pr_corr.</li>
+  <li>Pr_corr accepts also a matrix. In this case each column is processed 
+separately. The height of the sensor above bed can be either a scalar (same 
+value for all columns) or an array with one value for each column. This allows 
+to process an array of pressure sensors that were recorded in one file.<br>
+   </li>
+  <li>Pr_corr can also return the correction factor for each wave frequency
+that is used to compensate the depth attenuation.</li>
+ 
+</ul>
+                 
+<ul>
+     <li><b>Zero_crossing</b> takes as input argument the true water elevation
+time-series. If pressure-sensor data are used, they must be corrected with 
+pr_corr before. Therefore it is easier to simply call wavesp, which will
+then call pr_corr and zero_crossing.</li>
+   <li>Zero_crossing called without output argument prints the wave parameters
+in the matlab command window and creates a figure with histograms of wave
+heights and wave periods.</li>
+   <li>Zero_crossing can also return the height and period of each wave in 
+the original order, which is useful to analyse special wave events.&nbsp;</li>
+ 
+</ul>
+  
+<ul>
+         <li>Explanation of the calling syntax for each routine is obtained
+by typing "help wavesp", "help pr_corr" or "help zero_crossing" at the Matlab
+prompt.<br>
+    </li>
+   
+</ul>
+          <big><br>
+ <b>Examples of usage</b></big>      <br>
+       <span style=""><!--[endif]--><o:p></o:p></span> 
+<p class="MsoNormal"><!--[endif]--><o:p></o:p>  </p>
+   
+<table style="border: medium none ; border-collapse: collapse;"
+ cellpadding="0" cellspacing="0" border="0">
+       <tbody>
+    <tr>
+       <td valign="top"><b>wavesp<br>
+       </b></td>
+       <td valign="top"><br>
+       </td>
+     </tr>
+ <tr>
+   <td width="330" valign="top" style="width: 232.2pt;">   wavesp(data,0.5,4) 
+  </td>
+   <td style="border-left: medium none; width: 232.2pt;" valign="top"
+ width="310">   simple use, with sensor 0.5 m above bed and sampling frequency
+4 Hz</td>
+  </tr>
+  <tr>
+   <td width="330" valign="top"
+ style="border-top: medium none; width: 232.2pt;">   wavesp(data,0.5,4,[0.05
+0.45])   </td>
+   <td width="310" valign="top"
+ style="border-top: medium none; border-left: medium none; width: 232.2pt;">with
+pressure correction over the frequency range 0.05-0.45 Hz   </td>
+  </tr>
+  <tr>
+   <td width="330" valign="top"
+ style="border-top: medium none; width: 232.2pt;">   wavesp(data,0.5,4,'az') 
+  </td>
+   <td width="310" valign="top"
+ style="border-top: medium none; border-left: medium none; width: 232.2pt;">returning
+all spectral parameters and the zero-crossing parameters   </td>
+  </tr>
+  <tr>
+       <td valign="top">   wavesp(data,0.5,4,[],2)<br>
+       </td>
+       <td valign="top">divide data in segments of 1/2 instead of 1/4<br>
+       </td>
+     </tr>
+ <tr>
+   <td width="330" valign="top"
+ style="border-top: medium none; width: 232.2pt;">[parameters,names]=cal_settling(...) 
+  </td>
+   <td width="310" valign="top"
+ style="border-top: medium none; border-left: medium none; width: 232.2pt;"> 
+  returning parameters (row array) and their names</td>
+  </tr>
+  <tr>
+   <td width="330" valign="top"
+ style="border-top: medium none; width: 232.2pt;">[parameters,names,spectrum]=cal_settling(...)</td>
+   <td width="310" valign="top"
+ style="border-top: medium none; border-left: medium none; width: 232.2pt;">returning
+also the wave spectrum    </td>
+  </tr>
+  <tr>
+   <td width="330" valign="top"
+ style="border-top: medium none; width: 232.2pt;"><b>pr_corr   </b></td>
+   <td width="310" valign="top"
+ style="border-top: medium none; border-left: medium none; width: 232.2pt;"> 
+  <br>
+ </td>
+  </tr>
+  <tr>
+   <td width="330" valign="top"
+ style="border-top: medium none; width: 232.2pt;">surface=pr_corr(data,2.6,4,0.5) 
+  </td>
+   <td width="310" valign="top"
+ style="border-top: medium none; border-left: medium none; width: 232.2pt;">simple
+use, with mean water depth 2.6 m, sampling frequency 4 Hz and sensor 0.5
+above bed</td>
+  </tr>
+  <tr>
+   <td width="330" valign="top"
+ style="border-top: medium none; width: 232.2pt;">surface=pr_corr(data,[],4,0.5) 
+  </td>
+   <td width="310" valign="top"
+ style="border-top: medium none; border-left: medium none; width: 232.2pt;">with
+undetrended data (sea-surface above bottom)<br>
+ </td>
+  </tr>
+  <tr>
+   <td width="330" valign="top"
+ style="border-top: medium none; width: 232.2pt;">surface=pr_corr(data,2.6,4,0.5,[],[0.05
+0.45])<br>
+ </td>
+   <td width="310" valign="top"
+ style="border-top: medium none; border-left: medium none; width: 232.2pt;">with
+pressure correction over the frequency range 0.05-0.45 Hz</td>
+  </tr>
+    <tr>
+   <td width="330" valign="top"
+ style="border-top: medium none; width: 232.2pt;">correction=pr_corr([],2.6,4,0.5) 
+  </td>
+   <td width="310" valign="top"
+ style="border-top: medium none; border-left: medium none; width: 232.2pt;"> 
+  return the correction factor used to compensate the depth attenuation. 
+ </td>
+  </tr>
+ 
+  </tbody> 
+</table>
+        <b><br>
+ <br>
+ </b> 
+<p class="MsoNormal"><b><span style="">&nbsp;<a name="parameters"></a><big>Wave
+parameters computed by wavesp and zero_crossing</big><br>
+ </span></b></p>
+   
+<table border="0" cellspacing="0" cellpadding="0"
+ style="border: medium none ; border-collapse: collapse;">
+     <tbody>
+    <tr>
+       <td valign="top" width="100"><br>
+       </td>
+ <td valign="top" rowspan="1" colspan="2"><b>spectral wave-parameters</b>
+      <br>
+        </td>
+            </tr>
+ <tr>
+   <td valign="top" width="100"><br>
+       </td>
+ <td width="83" valign="top">   m<sub>0</sub>   </td>
+   <td width="312" valign="top">   Total variance<br>
+ Wave energy = <span style="font-family: Symbol;">water-density</span> &middot;
+g &middot; m<sub>0</sub>   </td>
+  </tr>
+  <tr>
+   <td valign="top" width="100"><br>
+       </td>
+ <td width="83" valign="top">   H<sub>m0</sub>   </td>
+   <td width="312" valign="top">   significant wave height by spectral method 
+  </td>
+  </tr>
+  <tr>
+   <td valign="top" width="100"><br>
+       </td>
+ <td width="83" valign="top">   T<sub>p</sub>   </td>
+   <td width="312" valign="top">   Peak period   </td>
+  </tr>
+  <tr>
+   <td valign="top" width="100" height="5">       <br>
+ </td>
+ <td width="83" valign="top" height="5">          <br>
+ </td>
+   <td width="312" valign="top" height="5">          <br>
+ </td>
+  </tr>
+  <tr>
+   <td valign="top" width="100"><br>
+       </td>
+ <td width="83" valign="top">   T<sub>01</sub>   </td>
+   <td width="312" valign="top">   average period m0/m1   </td>
+  </tr>
+  <tr>
+   <td valign="top" width="100"><br>
+       </td>
+ <td width="83" valign="top">   T<sub>02</sub>   </td>
+   <td width="312" valign="top">   average period (m0/m2)^0.5   </td>
+  </tr>
+  <tr>
+   <td valign="top" width="100"><br>
+       </td>
+ <td width="83" valign="top">   T<sub>pc</sub>   </td>
+   <td width="312" valign="top">   calculated peak period   </td>
+  </tr>
+  <tr>
+   <td valign="top" width="100"><br>
+       </td>
+ <td width="83" valign="top">   EPS2   </td>
+   <td width="312" valign="top">   spectral width parameter   </td>
+  </tr>
+  <tr>
+   <td valign="top" width="100"><br>
+       </td>
+ <td width="83" valign="top">   EPS4   </td>
+   <td width="312" valign="top">   spectral width parameter   </td>
+  </tr>
+  <tr>
+   <td valign="top" width="100"><br>
+       </td>
+ <td width="83" valign="top" rowspan="1" colspan="2">      <b><br>
+ zero-crossing wave-parameters<br>
+       </b> </td>
+     </tr>
+  <tr>
+   <td valign="top" width="100"><br>
+       </td>
+ <td width="83" valign="top">   H<sub>s</sub>   </td>
+   <td width="312" valign="top">   Significant wave height   </td>
+  </tr>
+  <tr>
+   <td valign="top" width="100"><br>
+       </td>
+ <td width="83" valign="top">   H<sub>mean</sub>   </td>
+   <td width="312" valign="top">   mean wave height   </td>
+  </tr>
+  <tr>
+   <td valign="top" width="100"><br>
+       </td>
+ <td width="83" valign="top">   H<sub>1/10</sub>   </td>
+   <td width="312" valign="top">   height of highest 10%   </td>
+  </tr>
+  <tr>
+   <td valign="top" width="100"><br>
+       </td>
+ <td width="83" valign="top">   H<sub>max</sub>   </td>
+   <td width="312" valign="top">   maximum wave height   </td>
+  </tr>
+  <tr>
+   <td valign="top" width="100"><br>
+       </td>
+ <td width="83" valign="top">   T<sub>mean</sub>   </td>
+   <td width="312" valign="top">   mean wave period   </td>
+  </tr>
+  <tr>
+   <td valign="top" width="100"><br>
+       </td>
+ <td width="83" valign="top">   T<sub>significant</sub>   </td>
+   <td width="312" valign="top">   mean period of highest 33%   </td>
+  </tr>
+ 
+  </tbody> 
+</table>
+   
+<p class="MsoNormal"><br>
+ </p>
+        <b><big>Reference</big><br>
+</b><br>
+     <a name="Tucker"></a>Tucker M.J. &amp; Pitt E.G. (2001) Waves in ocean
+engineering. Elsevier ocean engineering book series vol. 5, Elsevier, Amsterdam,
+521 p.<br>
+     <br>
+     <br>
+   <br>
+ <br>
+</body>
+</html>
