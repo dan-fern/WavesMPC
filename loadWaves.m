@@ -8,11 +8,11 @@
 %%% data checking to throw out bad points.  Thanks to Brad Ling, MIME, for 
 %%% assistance.  
 
-function [ waves ] = loadWaves(inputArg)
+function [ waves ] = loadWaves(varargin)
 if nargin == 0
     saveFlag = true;
 else
-    saveFlag = inputArg{1};
+    saveFlag = varargin{1};
 end
 
 % Read text file
@@ -21,7 +21,7 @@ end
 % handle the raw file
 
 % Read .wad file
-wadFile = './awacs/wpr/AWAC1302wpr.wad';
+wadFile = '.\Waves\buoydata\awacs\wpr\AWAC1302wpr.wad';
 wadData = read_space_delim_file(wadFile,17);
 astDist1 = single(wadData(:,8));
 astDist2 = single(wadData(:,9));
@@ -44,7 +44,7 @@ waves.min             = double(wadData(1:nSamples:end,5));
 waves.sec             = double(wadData(1:nSamples:end,6));
 
 % Combine surface elevation to make 2Hz data
-tempHeave = nan(2 * size(astDist1,1), 1);
+tempHeave = nan(2 * size(astDist1,1), 1); length(tempHeave);
 tempHeave(1:2:end) = astDist1;
 tempHeave(2:2:end) = astDist2;
 
@@ -56,6 +56,7 @@ clear wadData temp astDist1 astDist2
 
 nCols = nSamples * 2;
 nRows = length(tempHeave) / nCols;
+waves.sensorFreq = nSamples / nCols;
 
 waves.heave = reshape(tempHeave,nCols,nRows)';
 clear tempHeave
@@ -74,40 +75,38 @@ waves.meanDepth = mean(waves.heave,2);
 waves.heave = waves.heave - repmat(waves.meanDepth, 1, size(waves.heave,2));
 
 % Use mean water depth as a way to look for bad data
-keep = find(waves.meanDepth > 40);
-waves.heave          = waves.heave(keep,:);
-waves.dateTimeStr    = waves.dateTimeStr(keep,:);
-waves.serialDate     = waves.serialDate(keep,:);
-waves.meanDepth      = waves.meanDepth(keep);
-waves.year           = waves.year(keep);
-waves.month          = waves.month(keep);
-waves.day            = waves.day(keep);
-waves.hour           = waves.hour(keep);
-waves.min            = waves.min(keep);
-waves.sec            = waves.sec(keep);
+keepData = find(waves.meanDepth > 40);
+waves.heave          = waves.heave(keepData,:);
+waves.dateTimeStr    = waves.dateTimeStr(keepData,:);
+waves.serialDate     = waves.serialDate(keepData,:);
+waves.meanDepth      = waves.meanDepth(keepData);
+waves.year           = waves.year(keepData);
+waves.month          = waves.month(keepData);
+waves.day            = waves.day(keepData);
+waves.hour           = waves.hour(keepData);
+waves.min            = waves.min(keepData);
+waves.sec            = waves.sec(keepData);
 
 % Spectral Analysis and sea state parameters. This can be pulled off the 
 % AWACS, but for now I am calculating them myself. 
 
 % Perform spectral analysis on all time series values
 % Note sample rate of waves is 0.5 sec. or 2 Hz
-[waves.specCalc, waves.freqCalc] = spectral(waves.heave,0.5);
-
+[waves.specCalc, waves.freqCalc] = spectral(waves.heave, waves.sensorFreq);
 
 % Calculate moments from spectral info
 % Truncating frequencies lower than 0.01 Hz. why, why not?
 idx = find(waves.freqCalc(1,:) > 0.005);
 
-M0  = sum(  waves.specCalc(:,idx)                              , 2);
-Mm1 = sum( (waves.specCalc(:,idx) .* waves.freqCalc(:,idx).^-1), 2);
+sum0 = sum(  waves.specCalc(:,idx)                              , 2);
+sum1 = sum( (waves.specCalc(:,idx) .* waves.freqCalc(:,idx).^-1), 2);
 
 % OK get Te and Hs from this
-waves.HsCalc = 4 .* sqrt(M0);
-waves.TeCalc = Mm1 ./ M0;
+waves.HsCalc = 4 .* sqrt(sum0);
+waves.TeCalc = sum1 ./ sum0;
 
 % Lets free some memory
-clear M0 Mm1 idx
-
+clear sum0 sum1 idx
 
 % Calculate highest Wave height
 waves.Hmax = max(waves.heave,[],2) - min(waves.heave,[],2);
@@ -116,48 +115,48 @@ waves.Hmax = max(waves.heave,[],2) - min(waves.heave,[],2);
 %
 % First read spectral data from .was file
 
-wasFile = './awacs/wpb/AWAC1302wpb.was';
-wasFileContents = read_space_delim_file(wasFile,98);
+wasFile = '.\Waves\buoydata\awacs\wpb\AWAC1302wpb.was';
+wasData = read_space_delim_file(wasFile,98);
 
 % move spectral data to awacs structure
-waves.freq = wasFileContents(1,:);
-waves.spec = wasFileContents(keep+1,:);
+waves.freq = wasData(1,:);
+waves.spec = wasData(keepData+1,:);
 
-clear wasFileContents
+clear wasData
 
 % Ok now the .wap file
 
-wapFile = './awacs/wpb/AWAC1302wpb.wap';
-wapFileContents = read_space_delim_file(wapFile, 31);
+wapFile = '.\Waves\buoydata\awacs\wpb\AWAC1302wpb.wap';
+wapData = read_space_delim_file(wapFile, 31);
 
 % Extact out bad points
-wapFileContents = wapFileContents(keep,:);
+wapData = wapData(keepData,:);
 
 %Extract summary values
-waves.Hm0       = wapFileContents(:,8);
-waves.Hmax      = wapFileContents(:,11);
-waves.Hmean     = wapFileContents(:,12);
+waves.Hm0       = wapData(:,8);
+waves.Hmax      = wapData(:,11);
+waves.Hmean     = wapData(:,12);
 
-waves.Tm02      = wapFileContents(:,13);
-waves.Tp        = wapFileContents(:,14);
-waves.Tz        = wapFileContents(:,15);
-waves.Tmax      = wapFileContents(:,18);
+waves.Tm02      = wapData(:,13);
+waves.Tp        = wapData(:,14);
+waves.Tz        = wapData(:,15);
+waves.Tmax      = wapData(:,18);
 
-waves.astMean   = wapFileContents(:,24);
+waves.astMean   = wapData(:,24);
 
 % Error code things
-waves.noDetects = wapFileContents(:,26);
-waves.badDetect = wapFileContents(:,27);
-waves.errorCode = wapFileContents(:,31);
+waves.noDetects = wapData(:,26);
+waves.badDetect = wapData(:,27);
+waves.errorCode = wapData(:,31);
 
 %clear wapFileContents dateTime numFormat
-clear wapFileContents keep
+clear wapData keepData
 
 
 % Save data to file
 % save structure to cd if saveFlag is true
 if saveFlag == true;
-    save('awac_timeSeriesData.mat','awacs');
+    save('waves_timeSeriesData.mat','waves');
 end
 
 
@@ -165,7 +164,7 @@ end
 figure
 plot(waves.TeCalc,waves.HsCalc,'*')
 grid on
-xlabel('Enery Period T_e, (sec)')
+xlabel('Energy Period T_e, (sec)')
 ylabel('Significant Wave Height H_s, (m)')
 
 
