@@ -98,21 +98,20 @@ waves.sec            = waves.sec(keepData);
 % Truncating frequencies lower than 0.01 Hz. why, why not?
 idx = find(waves.freqCalc(1,:) > 0.005);
 
-sum0 = sum(  waves.specCalc(:,idx)                              , 2);
-sum1 = sum( (waves.specCalc(:,idx) .* waves.freqCalc(:,idx).^-1), 2);
+M0 = sum(  waves.specCalc(:,idx)                              , 2);
+M1 = sum( (waves.specCalc(:,idx) .* waves.freqCalc(:,idx).^-1), 2);
 
 % OK get Te and Hs from this
-waves.HsCalc = 4 .* sqrt(sum0);
-waves.TeCalc = sum1 ./ sum0;
+waves.HsCalc = 4 .* sqrt(M0);
+waves.TeCalc = M1 ./ M0;
 
 % Lets free some memory
-clear sum0 sum1 idx
+clear M0 M1 idx
 
 % Calculate highest Wave height
 waves.Hmax = max(waves.heave,[],2) - min(waves.heave,[],2);
 
 % Ok lets read in some data from other files
-%
 % First read spectral data from .was file
 
 wasFile = '.\Waves\buoydata\awacs\wpb\AWAC1302wpb.was';

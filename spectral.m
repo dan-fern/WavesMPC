@@ -27,23 +27,23 @@ if size(ts,1) == 1 && size(x,1) > 1
 end
 
 % Run FFT
-N    = size(x,2);
-X    = fft(x,[],2);
-Xmag = abs(X./N);
+nCols = size(x,2);
+X     = fft(x,[],2);
+Xmag  = abs(X./nCols);
 
 % Convert FFT results to spectral results
 % If N is ODD
-if mod(N,2) == 1
-    mid = ceil(N/2);
+if mod(nCols,2) == 1
+    mid = ceil(nCols/2);
     S = [Xmag(:,1)  2.*Xmag(:,2:mid)./sqrt(2)] .^2;
 % if N is even - extra center term at the fold
 else
-    mid = N/2;
+    mid = nCols/2;
     S = [Xmag(:,1)  2.*Xmag(:,2:mid)./sqrt(2)  Xmag(:,mid+1)./sqrt(2)] .^2;
 end
 
 % calculate freq vector
-F = (1./ts) * ( (0:(size(S,2))-1) ./ (N) );
+F = (1./ts) * ( (0:(size(S,2))-1) ./ (nCols) );
 
 % calculate phase angles
 if nargout == 3
