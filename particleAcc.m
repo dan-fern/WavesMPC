@@ -3,7 +3,7 @@
 %%% June 2015
 %%% takes in sea state and spits out summed particle accelerations.
 
-function [ ax, ay, az, eta ] = particleAcc( d, t, x, z, theta, H, T )
+function [ accelerations, eta ] = particleAcc( d, t, x, z, theta, H, T )
 
 g = 9.81; 
 ax = zeros(1,numel(t)); ay = zeros(1,numel(t)); az = zeros(1,numel(t));
@@ -40,4 +40,8 @@ for i = 1:numel(T)
         ay = ay + sind(theta) * H(i) * w * sqrt(g/d) / 2 * sin(k*x - w*t);
         az = az + -2 * H(i) * (w/2)^2 * (1 + z/d) * cos(k*x - w*t);
     end
+end
+
+accelerations.x = ax; accelerations.y = ay; accelerations.z = az;
+
 end
