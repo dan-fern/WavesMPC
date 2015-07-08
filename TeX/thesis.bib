@@ -1,8 +1,399 @@
-@Article{smith,
-author = {Smith, John and Jones, Jimmy-Jack},
-title = {{Some kind of title}},
-journal = {Health Physics},
-volume = {1},
-pages = {1000-1010},
-year = {1973}
+
+@article{petres, 
+author={Petres, Clement and Pailhas, Y. and Patron, P. and Petillot, Y. and Evans, J. and Lane, D.}, 
+journal={IEEE Transactions on Robotics}, 
+title={Path Planning for Autonomous Underwater Vehicles}, 
+year={2007}, 
+month={April}, 
+volume={23}, 
+number={2}, 
+pages={331-341}, 
+keywords={mobile robots;path planning;remotely operated vehicles;telerobotics;underwater vehicles;2D continuous path extraction;2D trajectory solution;2D underwater imagery;autonomous underwater vehicles;cognition process;fast marching-based approach;multiresolution method;optimal path curvature;path planning;Algorithm design and analysis;Anisotropic magnetoresistance;Artificial intelligence;Focusing;Mobile robots;Oceans;Path planning;Sea surface;Turning;Underwater vehicles;Autonomous underwater vehicle (AUV);FM* algorithm;Fast Marching (FM);currents;multiresolution method;path planning;turning radius}, 
+doi={10.1109/TRO.2007.895057}, 
+ISSN={1552-3098}
+}
+
+@article{geoffadapt,
+author = {Hollinger, Geoffrey and Englot, Brendan and Hover, Franz and Mitra, Urbashi and Sukhatme, Gaurav}, 
+title = {Active planning for underwater inspection and the benefit of adaptivity},
+volume = {32}, 
+number = {1}, 
+pages = {3-18}, 
+year = {2013}, 
+doi = {10.1177/0278364912467485}, 
+abstract ={We discuss the problem of inspecting an underwater structure, such as a submerged ship hull, with an autonomous underwater vehicle (AUV). Unlike a large body of prior work, we focus on planning the views of the AUV to improve the quality of the inspection, rather than maximizing the accuracy of a given data stream. We formulate the inspection planning problem as an extension to Bayesian active learning, and we show connections to recent theoretical guarantees in this area. We rigorously analyze the benefit of adaptive re-planning for such problems, and we prove that the potential benefit of adaptivity can be reduced from an exponential to a constant factor by changing the problem from cost minimization with a constraint on information gain to variance reduction with a constraint on cost. Such analysis allows the use of robust, non-adaptive planning algorithms that perform competitively with adaptive algorithms. Based on our analysis, we propose a method for constructing 3D meshes from sonar-derived point clouds, and we introduce uncertainty modeling through non-parametric Bayesian regression. Finally, we demonstrate the benefit of active inspection planning using sonar data from ship hull inspections with the Bluefin-MIT Hovering AUV.},
+eprint = {http://ijr.sagepub.com/content/32/1/3.full.pdf+html}, 
+journal = {The International Journal of Robotics Research} 
+}
+
+@INPROCEEDINGS{geoffuncertainty, 
+author={Hollinger, G. and Englot, B. and Hover, F. and Mitra, U. and Sukhatme, G.}, 
+booktitle={IEEE International Conference on Robotics and Automation (ICRA), 2012}, 
+title={Uncertainty-driven view planning for underwater inspection}, 
+year={2012}, 
+month={May}, 
+pages={4884-4891}, 
+keywords={Bayes methods;autonomous underwater vehicles;control engineering computing;inspection;mesh generation;mobile robots;nonparametric statistics;optimisation;path planning;regression analysis;ships;solid modelling;sonar;uncertainty handling;3D meshes;3D model;AUV;active perception problems;anomaly detection;autonomous underwater vehicle;cost functions;experimental trials;formal property;inspection performance;nonparametric Bayesian regression;path planning;profiling sonar data;ship hull inspection;sonar-derived point clouds;submerged ship hull;submodular optimization;uncertainty modeling;uncertainty-driven view planning;underwater inspection;underwater structure inspection;watertight surfaces;Data models;Inspection;Marine vehicles;Surface reconstruction;Surface treatment;Uncertainty;Vectors}, 
+doi={10.1109/ICRA.2012.6224726}, 
+ISSN={1050-4729}
+}
+
+@incollection{geoffmapping,
+title={Active and Adaptive Dive Planning for Dense Bathymetric Mapping},
+author={Hollinger, Geoffrey and Mitra, Urbashi and Sukhatme, Gaurav},
+booktitle={Experimental Robotics},
+pages={803-817},
+year={2013},
+isbn={978-3-319-00064-0},
+volume={88},
+series={Springer Tracts in Advanced Robotics},
+doi={10.1007/978-3-319-00065-7_54},
+publisher={Springer International Publishing},
+language={English}
+}
+
+@INPROCEEDINGS{binney, 
+author={Binney, Jonathan and Krause, A. and Sukhatme, G.}, 
+booktitle={IEEE International Conference on Robotics and Automation (ICRA), 2010}, 
+title={Informative path planning for an autonomous underwater vehicle}, 
+year={2010}, 
+month={May}, 
+pages={4791-4796}, 
+keywords={mobile robots;path planning;remotely operated vehicles;underwater vehicles;autonomous underwater vehicle;informative path planning;underwater glider;Boats;Computer science;Ocean temperature;Path planning;Remotely operated vehicles;Robotics and automation;Sea measurements;Sea surface;Spatial resolution;Underwater vehicles}, 
+doi={10.1109/ROBOT.2010.5509714}, 
+ISSN={1050-4729}
+}
+
+@inproceedings{binneyB&B,
+author={Binney, Jonathan and Sukhatme, G.}, 
+booktitle={IEEE International Conference on Robotics and Automation (ICRA), 2012}, 
+title={Branch and bound for informative path planning}, 
+year={2012}, 
+month={May}, 
+pages={2147-2154}, 
+keywords={Gaussian processes;mobile robots;path planning;tree searching;Gaussian process model;branch and bound method;feature selection algorithms;informative path planning;objective function monotonicity;optimal algorithm;Force;Path planning;Planning;Robots;Search problems;Sensors;Upper bound}, 
+doi={10.1109/ICRA.2012.6224902}, 
+ISSN={1050-4729}
+}
+
+@book{ROV,
+  title={The ROV Manual: A User Guide for Remotely Operated Vehicles},
+  author={Christ, Robert and Wernli Sr, Robert},
+  year={2013},
+  publisher={Butterworth-Heinemann}
+}
+
+@book{D&D,
+  title={Water Wave Mechanics for Scientists and Engineers},
+  author={Dean, Robert and Dalrymple, Robert},
+  series={World Scientific, Advanced Series on Ocean Engineering},
+  volume={2},
+  year={1991}
+}
+
+@book{falnes,
+  title={Ocean Waves and Oscillating Systems: Linear Interactions including Wave-Energy Extraction},
+  author={Falnes, Johannes},
+  year={2002},
+  publisher={Cambridge University Press}
+}
+
+@INPROCEEDINGS{dunbabin, 
+author={Dunbabin, M. and Corke, P. and Vasilescu, I. and Rus, D.}, 
+booktitle={IEEE International Conference on Robotics and Automation (ICRA), 2006}, 
+title={Data muling over underwater wireless sensor networks using an autonomous underwater vehicle}, 
+year={2006}, 
+month={May}, 
+pages={2091-2098}, 
+keywords={mobile agents;mobile robots;path planning;underwater vehicles;wireless sensor networks;autonomous underwater vehicle;mobile agent;underwater data muling;underwater wireless sensor networks;Acoustic sensors;Monitoring;Navigation;Optical fiber communication;Optical sensors;Robot sensing systems;Sensor systems;Underwater acoustics;Underwater vehicles;Wireless sensor networks}, 
+doi={10.1109/ROBOT.2006.1642013}, 
+ISSN={1050-4729}
+}
+
+@article {galceran,
+author = {Galceran, Enric and Campos, Ricard and Palomeras, Narcís and Ribas, David and Carreras, Marc and Ridao, Pere},
+title = {Coverage Path Planning with Real-time Replanning and Surface Reconstruction for Inspection of Three-dimensional Underwater Structures using Autonomous Underwater Vehicles},
+journal = {Journal of Field Robotics},
+issn = {1556-4967},
+doi = {10.1002/rob.21554},
+pages = {n/a--n/a},
+year = {2014}
+}
+
+@INPROCEEDINGS{galceranconf, 
+author={Galceran, E. and Campos, R. and Palomeras, N. and Carreras, M. and Ridao, P.}, 
+booktitle={Robotics and Automation (ICRA), 2014 IEEE International Conference on}, 
+title={Coverage path planning with realtime replanning for inspection of 3D underwater structures}, 
+year={2014}, 
+month={May}, 
+pages={6586-6591}, 
+keywords={autonomous underwater vehicles;inspection;path planning;sonar;stochastic programming;surface reconstruction;3D coverage path planning;3D mapping;3D models;3D underwater structures;GIRONA 500 AUV;autonomous underwater vehicle;breakwater structure;complex structures inspection;idealized path execution;inspected structures;inspection mission;ocean floor;planning method;realtime replanning;replanning algorithm;stochastic trajectory optimization;surface reconstruction techniques;target structure;underwater boulder;vehicle position uncertainty;vehicle range sensing sonars;Robots;Sea surface;Sensors;Sonar;Three-dimensional displays;Trajectory;Vehicles}, 
+doi={10.1109/ICRA.2014.6907831}
+}
+
+@article{kim,
+author = {Kim, Ayoung and Eustice, Ryan}, 
+title = {Active visual SLAM for robotic area coverage: Theory and experiment},
+year = {2014}, 
+doi = {10.1177/0278364914547893}, 
+abstract ={This paper reports on an integrated navigation algorithm for the visual simultaneous localization and mapping (SLAM) robotic area coverage problem. In the robotic area coverage problem, the goal is to explore and map a given target area within a reasonable amount of time. This goal necessitates the use of minimally redundant overlap trajectories for coverage efficiency; however, visual SLAM’s navigation estimate will inevitably drift over time in the absence of loop closures. Therefore, efficient area coverage and good SLAM navigation performance represent competing objectives. To solve this decision-making problem, we introduce perception-driven navigation, an integrated navigation algorithm that automatically balances between exploration and revisitation using a reward framework. This framework accounts for SLAM localization uncertainty, area coverage performance, and the identification of good candidate regions in the environment for visual perception. Results are shown for both a hybrid simulation and real-world demonstration of a visual SLAM system for autonomous underwater ship hull inspection.}, 
+journal = {The International Journal of Robotics Research}
+}
+
+@article{girdhar,
+year={2013},
+isbn={978-3-319-00064-0},
+booktitle={Experimental Robotics},
+volume={88},
+series={Springer Tracts in Advanced Robotics},
+editor={Desai, Jaydev and Dudek, Gregory and Khatib, Oussama and Kumar, Vijay},
+doi={10.1007/978-3-319-00065-7\_53},
+title={Autonomous Adaptive Underwater Exploration using Online Topic Modeling},
+publisher={Springer International Publishing},
+author={Girdhar, Yogesh and Giguère, Philippe and Dudek, Gregory},
+pages={789-802},
+language={English}
+}
+
+@article{mora,
+ author = {Mora, Andres and Ho, Colin and Saripalli, Srikanth},
+ title = {Analysis of Adaptive Sampling Techniques for Underwater Vehicles},
+ journal = {Autonomous Robots},
+ issue_date = {October 2013},
+ volume = {35},
+ number = {2-3},
+ month = {Oct},
+ year = {2013},
+ issn = {0929-5593},
+ pages = {111--122},
+ numpages = {12},
+ doi = {10.1007/s10514-013-9337-0},
+ acmid = {2508903},
+ publisher = {Kluwer Academic Publishers},
+ address = {Hingham, MA, USA},
+ keywords = {Adaptive sampling, Autonomous underwater vehicles, Experimental, Kriging, Optimal}
+}
+
+@article{hover,
+author = {Hover, Franz and Eustice, Ryan and Kim, Ayoung and Englot, Brendan and Johannsson, Hordur and Kaess, Michael and Leonard, John}, 
+title = {Advanced perception, navigation and planning for autonomous in-water ship hull inspection},
+volume = {31}, 
+number = {12}, 
+pages = {1445-1464}, 
+year = {2012}, 
+doi = {10.1177/0278364912461059}, 
+abstract ={Inspection of ship hulls and marine structures using autonomous underwater vehicles has emerged as a unique and challenging application of robotics. The problem poses rich questions in physical design and operation, perception and navigation, and planning, driven by difficulties arising from the acoustic environment, poor water quality and the highly complex structures to be inspected. In this paper, we develop and apply algorithms for the central navigation and planning problems on ship hulls. These divide into two classes, suitable for the open, forward parts of a typical monohull, and for the complex areas around the shafting, propellers and rudders. On the open hull, we have integrated acoustic and visual mapping processes to achieve closed-loop control relative to features such as weld-lines and biofouling. In the complex area, we implemented new large-scale planning routines so as to achieve full imaging coverage of all the structures, at a high resolution. We demonstrate our approaches in recent operations on naval ships.}, 
+journal = {The International Journal of Robotics Research} 
+}
+
+@book{lavalle,
+  title={Planning Algorithms},
+  author={LaValle, Steven},
+  year={2006},
+  publisher={Cambridge University Press}
+}
+
+@INPROCEEDINGS{ngo, 
+author={Ngo, P. and Das, J. and Ogle, J. and Thomas, J. and Anderson, W. and Smith, R.}, 
+booktitle={IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2014}, 
+title={Predicting the speed of a Wave Glider autonomous surface vehicle from wave model data}, 
+year={2014}, 
+month={Sept}, 
+pages={2250-2256}, 
+keywords={Gaussian processes;marine propulsion;marine vehicles;mobile robots;path planning;regression analysis;Gaussian process models;WAVEWATCH III model;dynamic event monitoring;marine robots;observable environmental parameters;on-board sensor;probabilistic regression model;robotic path planning;vehicle speed;wave glider autonomous surface vehicle speed prediction;wave model data;wave parameter forecasts;wind energy;Data models;Gaussian processes;Mathematical model;Predictive models;Robots;Time series analysis;Vehicles}, 
+doi={10.1109/IROS.2014.6942866}
+}
+
+@article {papa,
+author = {Papadopoulos, Georgios and Kurniawati, Hanna and Shariff, Ahmed-Shafeeq-Bin-Mohd and Wong, Liang Jie and Patrikalakis, Nicholas},
+title = {Experiments on Surface Reconstruction for Partially Submerged Marine Structures},
+journal = {Journal of Field Robotics},
+volume = {31},
+number = {2},
+issn = {1556-4967},
+doi = {10.1002/rob.21478},
+pages = {225--244},
+year = {2014}
+}
+
+@article {smithglider,
+author = {Smith, Ryan and Schwager, Mac and Smith, Stephen and Jones, Burton and Rus, Daniela and Sukhatme, Gaurav},
+title = {Persistent ocean monitoring with underwater gliders: Adapting sampling resolution},
+journal = {Journal of Field Robotics},
+volume = {28},
+number = {5},
+publisher = {Wiley Subscription Services, Inc., A Wiley Company},
+issn = {1556-4967},
+doi = {10.1002/rob.20405},
+pages = {714--741},
+year = {2011}
+}
+
+@INPROCEEDINGS{smithmeas, 
+author={Smith, R. and Das, J. and Hine, G. and Anderson, W. and Sukhatme, G.}, 
+booktitle={OCEANS 2011}, 
+title={Predicting Wave Glider speed from environmental measurements}, 
+year={2011}, 
+month={Sept}, 
+pages={1-8}, 
+keywords={mobile robots;motion control;path planning;robot kinematics;sensors;underwater vehicles;velocity control;Liquid Robotics;environmental measurement;forward motion;ocean phenomena;ocean science community;ocean waves;oceanographic data collection;sensor platform;vehicle planning;vehicle speed;wave glider speed prediction;Current measurement;Robots;Sea measurements;Sea surface;Surface waves;Vehicles}
+}
+
+@inproceedings{smithfront,
+author = {Smith, Ryan and Cooksey, Philip and Py, Frederic and Sukhatme, Gaurav and Rajan, Kanna},
+title = {Adaptive Path Planning for Tracking Ocean Fronts with an Autonomous Underwater Vehicle},
+booktitle = {Proceedings, International Symposium on Experimental Robotics},
+address = {Morocco},
+month = {Jun},
+year = {2014},
+}
+
+@incollection{smithtracking,
+title={Trajectory Design for Autonomous Underwater Vehicles Based on Ocean Model Predictions for Feature Tracking},
+author={Smith, Ryan and Chao, Yi and Jones, Burton and Caron, David and Li, Peggy and Sukhatme, Gaurav},
+booktitle={Field and Service Robotics},
+pages={263-273},
+year={2010},
+isbn={978-3-642-13407-4},
+volume={62},
+series={Springer Tracts in Advanced Robotics},
+editor={Howard, Andrew and Iagnemma, Karl and Kelly, Alonzo},
+doi={10.1007/978-3-642-13408-1_24},
+publisher={Springer Berlin Heidelberg},
+language={English}
+}
+
+@article {eich,
+author = {Eich, Markus and Bonnin-Pascual, Francisco and Garcia-Fidalgo, Emilio and Ortiz, Alberto and Bruzzone, Gabriele and Koveos, Yannis and Kirchner, Frank},
+title = {A Robot Application for Marine Vessel Inspection},
+journal = {Journal of Field Robotics},
+volume = {31},
+number = {2},
+issn = {1556-4967},
+doi = {10.1002/rob.21498},
+pages = {319--341},
+year = {2014}
+}
+
+@book{GP,
+  title={Gaussian Processes for Machine Learning},
+  author={Rasmussen, Carl and Williams, Christopher K.},
+  year={2006},
+  publisher={MIT Press}
+}
+
+@book{MAS,
+  title={Multiagent Systems: A Modern Approach to Distributed Artificial Intelligence},
+  author={Weiss, Gerhard},
+  year={1999},
+  publisher={MIT Press}
+}
+
+@book{prob,
+  title={Probabilistic Robotics},
+  author={Thrun, Sebastian and Burgard, Wolfram and Fox, Dieter},
+  year={2005},
+  publisher={MIT press}
+}
+
+@INPROCEEDINGS{chaves, 
+author={Chaves, S. and Ayoung Kim and Eustice, R.}, 
+booktitle={IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2014 }, 
+title={Opportunistic sampling-based planning for active visual SLAM}, 
+year={2014}, 
+month={Sept}, 
+pages={3073-3080}, 
+keywords={Gaussian processes;SLAM (robots);image registration;image sensors;inspection;mobile robots;path planning;regression analysis;robot vision;sampling methods;ships;uncertain systems;Gaussian process regression;active visual SLAM path planning algorithm;camera registrations;information filtering;loop-closing revisit actions;loop-closure paths;navigation uncertainty bounding;opportunistic path planner;opportunistic sampling-based planning;revisit paths planning;robot uncertainty;ship hull inspection robot;two-step optimization;visual navigation uncertainty;Cameras;Navigation;Planning;Simultaneous localization and mapping;Uncertainty;Visualization}, 
+doi={10.1109/IROS.2014.6942987}
+}
+
+@article{barkby,
+author = {Barkby, Stephen and Williams, Stefan and Pizarro, Oscar and Jakuba, Michael}, 
+title = {Bathymetric Particle Filter SLAM Using Trajectory Maps},
+year = {2012}, 
+doi = {10.1177/0278364912459666}, 
+abstract ={We present an efficient and featureless approach to bathymetric simultaneous localization and mapping (SLAM) that utilizes a Rao–Blackwellized particle filter (RBPF) and Gaussian process (GP) regression to provide loop closures in areas with little to no overlap with previously explored terrain. To significantly reduce the memory requirements (thereby allowing for the processing of large datasets) a novel map representation is also introduced that, instead of directly storing estimates of seabed depth, records the trajectory of each particle and synchronizes them to a common log of bathymetric observations. Upon detecting a loop closure each particle is weighted by matching new observations to the current predictions generated from a local reconstruction of their map using GP regression. Here the spatial correlation in the environment is fully exploited, allowing predictions of seabed depth in areas that may not have been directly observed previously. The results demonstrate how observations of seafloor structure with partial overlap can be used by bathymetric SLAM to improve map self consistency when compared with dead reckoning fused with long-baseline (LBL) observations. In addition we show how mapping corrections can still be achieved even when no map overlap is present.}, 
+journal = {The International Journal of Robotics Research} 
+}
+
+@article{campos,
+author = {Campos, Ricard and Garcia, Rafael and Alliez, Pierre and Yvinec, Mariette}, 
+title = {A surface reconstruction method for in-detail underwater 3D optical mapping},
+year = {2014}, 
+doi = {10.1177/0278364914544531}, 
+abstract ={Underwater range scanning techniques are starting to gain interest in underwater exploration, providing new tools to represent the seafloor. These scans (often) acquired by underwater robots usually result in an unstructured point cloud, but given the common downward-looking or forward-looking configuration of these sensors with respect to the scene, the problem of recovering a piecewise linear approximation representing the scene is normally solved by approximating these 3D points using a heightmap (2.5D). Nevertheless, this representation is not able to correctly represent complex structures, especially those presenting arbitrary concavities normally exhibited in underwater objects. We present a method devoted to full 3D surface reconstruction that does not assume any specific sensor configuration. The method presented is robust to common defects in raw scanned data such as outliers and noise often present in extreme environments such as underwater, both for sonar and optical surveys. Moreover, the proposed method does not need a manual preprocessing step. It is also generic as it does not need any information other than the points themselves to work. This property leads to its wide application to any kind of range scanning technologies and we demonstrate its versatility by using it on synthetic data, controlled laser scans, and multibeam sonar surveys. Finally, and given the unbeatable level of detail that optical methods can provide, we analyze the application of this method on optical datasets related to biology, geology and archeology.}, 
+journal = {The International Journal of Robotics Research} 
+}
+
+@INPROCEEDINGS{medagoda, 
+author={Medagoda, Lashika and Kinsey, James and Eilders, Martin}, 
+booktitle={IEEE International Conference on Robotics and Automation (ICRA), 2015}, 
+title={Autonomous Underwater Vehicle Localization in a Spatiotemporally Varying Water Current Field}, 
+year={2015}, 
+month={May}, 
+pages={2091-2098}, 
+keywords={mobile agents;mobile robots;path planning;underwater vehicles;wireless sensor networks;autonomous underwater vehicle;mobile agent;underwater data muling;underwater wireless sensor networks;Acoustic sensors;Monitoring;Navigation;Optical fiber communication;Optical sensors;Robot sensing systems;Sensor systems;Underwater acoustics;Underwater vehicles;Wireless sensor networks}, 
+doi={10.1109/ROBOT.2006.1642013}, 
+ISSN={1050-4729}
+}
+
+@INPROCEEDINGS{hitz, 
+author={Hitz, G. and Gotovos, A. and Pomerleau, F. and Garneau, M. and Pradalier, C. and Krause, A. and Siegwart, R.}, 
+booktitle={IEEE International Conference on Robotics and Automation (ICRA), 2014}, 
+title={Fully autonomous focused exploration for robotic environmental monitoring}, 
+year={2014}, 
+month={May}, 
+pages={2658-2664}, 
+keywords={marine engineering;path planning;remotely operated vehicles;sensors;ASV;LSE-DP path planner;aquatic monitoring setting;autonomous sampling;autonomous surface vessel;receding horizon path planner;robotic environmental monitoring;robotic sensor;threshold value;Boats;Lakes;Level set;Planning;Robot sensing systems}, 
+doi={10.1109/ICRA.2014.6907240}
+}
+
+@article{ballard,
+author = {Ballard, Robert and Stager, Lawrence and Master, Daniel and Yoerger, Dana and Mindell, David and Whitcomb, Louis and Singh, Hanumant and Piechota, Dennis},
+title = {Iron Age Shipwrecks in Deep Water off Ashkelon, Israel},
+journal = {American Journal of Archaeology},
+volume = {106},
+number = {2},
+publisher = {Archaeological Institute of America},
+ISSN = {00029114},
+pages = {pp. 151-168},
+year = {2002},
+abstract = {In 1997, two shipwrecks were first discovered in the Mediterranean Sea west of Israel by the U.S. Navy's research Submarine NR-1. Further investigation in 1999 with the remotely operated vehicle system Medea/Jason found the wrecks to be from the eighth century B.C., the earliest known shipwrecks to be found in the deep sea. Both ships appear to be of Phoenician origin, laden with cargoes of fine wine destined for either Egypt or Carthage, when they were lost in a storm on the high seas. The ships lie upright on the seafloor at a depth of 400 m in a depression formed by the scour of bottom currents. Their discovery suggests that ancient mariners took direct routes to their destinations even if it meant traveling beyond sight of land.},
+language = {English},
+copyright = {Copyright © 2002 Archaeological Institute of America}
+}
+
+@article {leonard,
+author = {Leonard, Naomi and Paley, Derek and Davis, Russ and Fratantoni, David and Lekien, Francois and Zhang, Fumin},
+title = {Coordinated control of an underwater glider fleet in an adaptive ocean sampling field experiment in Monterey Bay},
+journal = {Journal of Field Robotics},
+volume = {27},
+number = {6},
+publisher = {Wiley Subscription Services, Inc., A Wiley Company},
+issn = {1556-4967},
+doi = {10.1002/rob.20366},
+pages = {718--740},
+year = {2010},
+}
+
+@INPROCEEDINGS{bachmayer, 
+author={Bachmayer, R. and Leonard, N. and Graver, J. and Fiorelli, E. and Bhatta, P. and Paley, D.}, 
+booktitle={International Symposium on Underwater Technology (UT), 2004}, 
+title={Underwater gliders: recent developments and future applications}, 
+year={2004}, 
+month={April}, 
+pages={195-200}, 
+keywords={bathymetry;oceanographic equipment;oceanographic regions;oceanographic techniques;remotely operated vehicles;underwater vehicles;2003 AOSN-II field experiment;California;Monterey Bay;NE Pacific Ocean;NRC-IOT;autonomous underwater gliders;autonomous underwater vehicles;ocean sampling technology;regional ocean observation system;Communication system control;Control systems;Current measurement;Marine technology;Oceans;Particle measurements;Sampling methods;Sea measurements;Time measurement;Underwater vehicles}, 
+doi={10.1109/UT.2004.1405540}
+}
+
+@INPROCEEDINGS{fernandez, 
+author={Fernandez-Perdomo, E. and Cabrera-Gamez, J. and Hernandez-Sosa, D. and Isern-Gonzalez, J. and Dominguez-Brito, A. and Redondo, A. and Coca, J. and Ramos, A. and Fanjul, E. and García, M.}, 
+booktitle={OCEANS 2010 IEEE - Sydney}, 
+title={Path planning for gliders using Regional Ocean Models: Application of Pinzón path planner with the ESEOAT model and the RU27 trans-Atlantic flight data}, 
+year={2010}, 
+month={May}, 
+pages={1-10}, 
+keywords={geophysics computing;oceanographic techniques;path planning;remotely operated vehicles;CTS-A path planning algorithm;ESEOAT model;Pinzón path planner software;ROM;RU27 Scarlet Knight glider;RU27 trans-Atlantic flight data;UUV piloting;buoyancy;constant-time surfacing A* algorithm;ocean currents;oceanography;regional ocean models;unmanned underwater vehicles;vertical saw tooth route;Computational modeling;Kinematics;Oceans;Trajectory;Vehicle dynamics;Vehicles}, 
+doi={10.1109/OCEANSSYD.2010.5603684}
 }
