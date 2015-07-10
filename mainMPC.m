@@ -3,7 +3,7 @@ clear all
 close all
 home
 
-d = 50; t = 0.5:0.5:100; x = 0; z = -20; theta = 0; rho = 1030;
+d = 50; t = 0.5:0.5:100; x = 100; z = -20; theta = 0; rho = 1030;
 length = 0.7; width = 0.4; height = 0.4;
 
 swl = zeros(1, numel(t));
@@ -41,3 +41,10 @@ legend('Accelerations', 'Velocities'); xlabel('time, s'); ylabel('elevation, m')
 
 %max(particles.vz)
 %find(particles.vz==max(particles.vx))
+
+%% simulator
+figure;
+for i = 1:numel(t)
+    plot(t(i:i+10),eta(i:i+10));
+    pause(0.05);
+end
