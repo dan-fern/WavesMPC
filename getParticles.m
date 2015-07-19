@@ -1,10 +1,10 @@
-%%% particles.m 
+%%% getParticles.m 
 %%% Daniel Fernández
 %%% June 2015
 %%% takes in sea state and spits out summed particle velocities,
 %%% accelerations and sea state.
 
-function [ particles, eta ] = particles( d, t, x, z, theta, H, T )
+function [ particles, eta ] = getParticles( d, t, x, z, theta, H, T, E )
 
 g = 9.81; 
 vx = zeros(1,numel(t)); vy = zeros(1,numel(t)); vz = zeros(1,numel(t));
@@ -15,20 +15,21 @@ for i = 1:numel(T)
     w = 2 * pi / T(i);
     L = g * T(i)^2 * (tanh(w^2 * d / g)^(3/4))^(2/3) / (2 * pi);
     k = 2 * pi / L;
-    eta = eta + H(i) / 2 * cos(k*x - w*t);
+    %w = sqrt(g * k * tanh(k * d))
+    eta = eta + H(i) / 2 * cos(k*x - w*t + E(i));
     if d / L > 0.5
         %deep
         if d < L / 2
             vx = vx + cosd(theta) * H(i) * w / 2 * exp(k*z) ...
-                * cos(k*x - w*t);
+                * cos(k*x - w*t + E(i));
             vy = vy + sind(theta) * H(i) * w / 2 * exp(k*z) ...
-                * cos(k*x - w*t);
-            vz = vz + H(i) * w / 2 * exp(k*z) * sin(k*x - w*t);
+                * cos(k*x - w*t + E(i));
+            vz = vz + H(i) * w / 2 * exp(k*z) * sin(k*x - w*t + E(i));
             ax = ax + cosd(theta) * 2 * H(i) * (w/2)^2 * exp(k*z) ...
-                * sin(k*x - w*t);
+                * sin(k*x - w*t + E(i));
             ay = ay + sind(theta) * 2 * H(i) * (w/2)^2 * exp(k*z) ...
-                * sin(k*x - w*t);
-            az = az + -2 * H(i) * (w/2)^2 * exp(k*z) * cos(k*x - w*t);
+                * sin(k*x - w*t + E(i));
+            az = az + -2 * H(i) * (w/2)^2 * exp(k*z) * cos(k*x - w*t + E(i));
         else
             continue;
         end
@@ -36,28 +37,28 @@ for i = 1:numel(T)
         %intermediate
         if d < L / 2
             vx = vx + cosd(theta) * (g * pi * H(i) * cosh(2*pi*(z+d)/L) ...
-                * cos(k*x - w*t) / (w * L * cosh(2*pi*d/L)));
+                * cos(k*x - w*t + E(i)) / (w * L * cosh(2*pi*d/L)));
             vy = vy + sind(theta) * (g * pi * H(i) * cosh(2*pi*(z+d)/L) ...
-                * cos(k*x - w*t) / (w * L * cosh(2*pi*d/L)));
+                * cos(k*x - w*t + E(i)) / (w * L * cosh(2*pi*d/L)));
             vz = vz + g * pi * H(i) * sinh(2*pi*(z+d)/L) * ...
-                sin(k*x - w*t) / (w * L * cosh(2*pi*d/L));
+                sin(k*x - w*t + E(i)) / (w * L * cosh(2*pi*d/L));
             ax = ax + cosd(theta) * (g * pi * H(i) * cosh(2*pi*(z+d)/L) ...
-                * sin(k*x - w*t) / (L * cosh(2*pi*d/L)));
+                * sin(k*x - w*t + E(i)) / (L * cosh(2*pi*d/L)));
             ay = ay + sind(theta) * (g * pi * H(i) * cosh(2*pi*(z+d)/L) ...
-                * sin(k*x - w*t) / (L * cosh(2*pi*d/L)));
+                * sin(k*x - w*t + E(i)) / (L * cosh(2*pi*d/L)));
             az = az + -g * pi * H(i) * sinh(2*pi*(z+d)/L) * ...
-                cos(k*x - w*t) / (L * cosh(2*pi*d/L));
+                cos(k*x - w*t + E(i)) / (L * cosh(2*pi*d/L));
         else
             continue;
         end
     else
         %shallow
-        vx = vx + cosd(theta) * H(i) / 2 * sqrt(g/d) * cos(k*x - w*t);
-        vy = vy + sind(theta) * H(i) / 2 * sqrt(g/d) * cos(k*x - w*t);
-        vz = vz + H(i) * w / 2 * (1 + z/d) * sin(k*x - w*t);
-        ax = ax + cosd(theta) * H(i) * w * sqrt(g/d) / 2 * sin(k*x - w*t);
-        ay = ay + sind(theta) * H(i) * w * sqrt(g/d) / 2 * sin(k*x - w*t);
-        az = az + -2 * H(i) * (w/2)^2 * (1 + z/d) * cos(k*x - w*t);
+        vx = vx + cosd(theta) * H(i) / 2 * sqrt(g/d) * cos(k*x - w*t + E(i));
+        vy = vy + sind(theta) * H(i) / 2 * sqrt(g/d) * cos(k*x - w*t + E(i));
+        vz = vz + H(i) * w / 2 * (1 + z/d) * sin(k*x - w*t + E(i));
+        ax = ax + cosd(theta) * H(i) * w * sqrt(g/d) / 2 * sin(k*x - w*t + E(i));
+        ay = ay + sind(theta) * H(i) * w * sqrt(g/d) / 2 * sin(k*x - w*t + E(i));
+        az = az + -2 * H(i) * (w/2)^2 * (1 + z/d) * cos(k*x - w*t + E(i));
     end
 end
 

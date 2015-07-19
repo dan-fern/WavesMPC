@@ -1,10 +1,10 @@
-%%% forces.m 
+%%% getForces.m 
 %%% Daniel Fernández
 %%% June 2015
 %%% takes in particle velocities and spits out instantaneous forces.
 %%% Currently only gives drag
 
-function [ forces ] = forces( particles, rho, length, width, height, t )
+function [ forces ] = getForces( particles, rho, length, width, height, t )
 
 forces.mag = zeros(1, numel(t));
 forces.x = zeros(1, numel(t));
