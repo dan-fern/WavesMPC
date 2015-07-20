@@ -72,7 +72,7 @@ for i = 6:numel(t)-5
     axis([-10, 10, IC(2)-10, IC(2)+10]); grid on;
     xloc = strcat(' x =  ', num2str(x, '%.2f'), 'm, ');
     zloc = strcat(' z =  ', num2str(z, '%.2f'), 'm');
-    xlabel(strcat('Vehicle Position: ', xloc, zloc), 'FontSize', 20); 
+    xlabel(strcat('Vehicle Displacement: ', xloc, zloc), 'FontSize', 20); 
     ylabel('Water Depth, m', 'FontSize', 20);
     set(gca,'XTickLabel',get(gca,'XTickLabel'),'fontsize',16);
     set(gca,'YTickLabel',get(gca,'YTickLabel'),'fontsize',16);
@@ -80,6 +80,6 @@ for i = 6:numel(t)-5
     p(4) = p(4) + 0.04;
     set(gca, 'pos', p);
     line([0,0], [(-1*d),0],'LineWidth', 2, 'Color', 'r');
-    pause(.05); hold off;
+    pause(.01); hold off;
     [ particles ] = getParticles( d, t, x, z, theta, H, T, E );
 end
