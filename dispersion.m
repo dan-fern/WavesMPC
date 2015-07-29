@@ -1,17 +1,28 @@
 function [ solw, solL, solk ] = dispersion( d, T, g )
 
-syms w L k
+solw = zeros(1, numel(T)); 
+solL = zeros(1, numel(T)); 
+solk = zeros(1, numel(T));
 
-[ sol ] = vpasolve(...
-     w == sqrt(g * k * tanh(k * d)), ...
-     L == g * T^2 * (tanh(w^2 * d / g)^(3/4))^(2/3) / (2 * pi), ...
-     k == 2 * pi / L, ...
-     w, L, k);
+for j = 1:numel(T)
+    wGuess = 2 * pi / T(j);
+    LGuess = g * T(j)^2 * (tanh(wGuess^2 * d / g)^(3/4))^(2/3) / (2 * pi);
+    kGuess = 2 * pi / LGuess;
 
-solw = single(sol.w);
-solL = single(sol.L);
-solk = single(sol.k);
- 
+    syms w L k
+
+    [ sol ] = vpasolve(...
+         w == sqrt(g * k * tanh(k * d)), ...
+         L == g * T(j)^2 * (tanh(w^2 * d / g)^(3/4))^(2/3) / (2 * pi), ...
+         k == 2 * pi / L, ...
+         w, L, k, [wGuess, LGuess, kGuess]);
+
+    solw(j) = single(sol.w);
+    solL(j) = single(sol.L);
+    solk(j) = single(sol.k);
+
+end
+
 return
 
 end
