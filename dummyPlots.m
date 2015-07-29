@@ -1,5 +1,16 @@
 % dummyPlots
 
+temp = [ volturnus.robotPlots.vx; volturnus.particlePlots.vx; ];
+temp = [ temp; volturnus.robotPlots.vz; volturnus.particlePlots.vz; ];
+
+figure('units','normalized','outerposition',[0 0 1 1]);
+subplot(2,1,1)
+plot(t, temp(1,:),'r'); hold on; plot(t, temp(2,:),'b');
+legend('robot velocity', 'particle velocity')
+subplot(2,1,2)
+plot(t, temp(3,:),'r'); hold on; plot(t, temp(4,:),'b');
+legend('robot velocity', 'particle velocity')
+
 figure; plot(t, waves.eta); xlabel('time, s'); ylabel('elevation, m');
 
 figure; plot(t, waves.eta); hold on; plot(t, waves.swl, 'linestyle', '--'); 

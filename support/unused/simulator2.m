@@ -1,8 +1,6 @@
 function simulator2( t, eta, d, IC, plotData )
 
 figure('units','normalized','outerposition',[0 0 1 1]);
-%x = IC(1); z = IC(2); vx = IC(3); vz = IC(4); 
-%dt = t(2) - t(1);
 tVis = -2.5:0.5:t(end);
 etaVis = zeros(1,numel(tVis));
 start = numel(etaVis) - numel(eta) + 1;
@@ -10,8 +8,6 @@ etaVis(start:end) = eta;
 swlVis = zeros(1,numel(tVis));
 
 for i = 1:numel(t)-9
-    %x = x + particles.vx(i) * dt;
-    %z = z + particles.vz(i) * dt;
     px = plotData.px(i);
     pz = plotData.pz(i);
     vx = plotData.vx(i);
@@ -57,7 +53,6 @@ for i = 1:numel(t)-9
         pause(.05); 
     end
     hold off;
-    %[ particles ] = getParticles( d, t, x, z, theta, H, T, E );
 end
 
 return

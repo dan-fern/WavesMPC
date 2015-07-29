@@ -43,12 +43,18 @@ robot.vz = yz(end);
 robot.px = robot.px + robot.vx * (tx(end) - tx(1)); 
 robot.pz = robot.pz + robot.vz * (tz(end) - tz(1));
 
-robot.robotPlots.px(count+1) = robot.px;
-robot.robotPlots.pz(count+1) = robot.pz;
-robot.robotPlots.vx(count+1) = robot.vx;
-robot.robotPlots.vz(count+1) = robot.vz;
-robot.robotPlots.ax(count+1) = robot.ax;
-robot.robotPlots.az(count+1) = robot.az;
+Y = [ robot.px, robot.pz, robot.vx, robot.vz, robot.ax, robot.az ]; 
+[ robot.robotPlots ] = updatePlotHistory( Y, robot.robotPlots, count, 1 );
+
+tempPx = robot.particlePlots.px(count) + robot.particles.vx(count) * dt;
+tempPz = robot.particlePlots.pz(count) + robot.particles.vz(count) * dt;
+tempVx = robot.particles.vx(count+1);
+tempVz = robot.particles.vz(count+1);
+tempAx = robot.particles.ax(count+1);
+tempAz = robot.particles.az(count+1);
+
+U = [tempPx, tempPz, tempVx, tempVz, tempAx, tempAz];
+[ robot.particlePlots ] = updatePlotHistory( U, robot.particlePlots, count, 1 );
 
 return
 
