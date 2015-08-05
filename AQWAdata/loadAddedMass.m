@@ -1,6 +1,14 @@
 function [ Mx, Mz ] = loadAddedMass( z )
 
-fileName = horzcat(num2str(z), 'z.lis');
+if z >= 5 && z < 45
+    fileZ = round(z, -1);
+elseif z < 5
+    fileZ = 10;
+else
+    fileZ = 40;
+end
+
+fileName = horzcat(num2str(fileZ), 'z.lis');
 fid = fopen(fileName,'r');
 allText = textscan(fid, '%s','Delimiter','');
 fclose(fid);
