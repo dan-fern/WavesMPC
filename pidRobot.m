@@ -1,24 +1,40 @@
-function [ robot ] = driftRobot( t, robot, spectra, count )
+function [ robot ] = pidRobot( t, robot, spectra, count )
 
 dt = t(2) - t(1);
-x = robot.px; z = robot.pz; 
+
+KpX = 0.35; KpZ = 0.3; 
+%KiX = 0; KiZ = 0;
+KdX = 1; KdZ = 1; 
 
 pErrorX = robot.errors.pErrorX;
 pErrorZ = robot.errors.pErrorZ;
+dErrorX = robot.errors.dErrorX;
+dErrorZ = robot.errors.dErrorZ;
+%iErrorX
+%iErrorZ
+
+gainsX = KpX * pErrorX + KdX * dErrorX;% + KiX * iErrorX;
+gainsZ = KpZ * pErrorZ + KdZ * dErrorZ;% + KiZ * iErrorZ;
+
+gainsX( gainsX >=  1) =  1;
+gainsX( gainsX <= -1) = -1;
+gainsZ( gainsZ >=  1) =  1;
+gainsZ( gainsZ <= -1) = -1;
+
+motorInputX = gainsX;
+motorInputZ = gainsZ;
 
 rho = spectra.rho;
 
+fA = robot.fA;                      %Forward Thruster Angle
+aA = robot.aA;                      %Aft Thruster Angle
+vA = robot.vA;                      %Vertical Thruster Angle
+Tmax = robot.Tmax;                  %Max Thrust
 mDry = robot.mDry;                  %robot dry mass
 mAdx = robot.mAdx;                  %robot added mass in x
 mAdz = robot.mAdz;                  %robot added mass in z
 Ax = robot.width * robot.height;    %incident area in x
 Az = robot.length * robot.width;    %incident area in z
-
-if count ~= 1
-    [ robot.particles ] = getRobotParticles( t, x, z, spectra, robot.particles, count );
-else
-    [ robot.particles ] = getSeaStateParticles( t, x, z, spectra );
-end
 
 vx = robot.particles.vx(count); ax = robot.particles.ax(count);
 vz = robot.particles.vz(count); az = robot.particles.az(count);
@@ -26,11 +42,19 @@ vz = robot.particles.vz(count); az = robot.particles.az(count);
 [ Cd ] = getCd( vx, vz, Ax, Az );
 
 
+Bx = [ cos(fA) cos(fA) -cos(aA) -cos(aA) ];
+ux = [ motorInputX motorInputX -motorInputX -motorInputX ]';
+
+Bz = [ -cos(vA) -cos(vA) ]; 
+uz = [ -motorInputZ -motorInputZ ]';
+
 x2dot = @(tx,x1dot) ...
-    (mAdx*ax + rho*Ax*Cd/2 * abs(x1dot-vx) * (x1dot-vx)) / -(mDry+mAdx)/5;
+    ((mAdx*ax + rho*Ax*Cd/2 * abs(x1dot-vx) * (x1dot-vx)) / -(mDry+mAdx) ...
+    + (Tmax/mDry) * Bx * ux)/3;
 
 z2dot = @(tz,z1dot) ...
-    (mAdz*az + rho*Az*Cd/2 * abs(z1dot-vz) * (z1dot-vz)) / -(mDry+mAdz)/5;
+    ((mAdz*az + rho*Az*Cd/2 * abs(z1dot-vz) * (z1dot-vz)) / -(mDry+mAdz) ...
+    + (Tmax/mDry) * Bz * uz)/3;
 
 [ tx, yx ] = ode45( x2dot, [0 dt], robot.vx );
 [ tz, yz ] = ode45( z2dot, [0 dt], robot.vz );
@@ -63,8 +87,6 @@ tempAz = robot.particles.az(count+1);
 
 U = [tempPx, tempPz, tempVx, tempVz, tempAx, tempAz];
 [ robot.particlePlots ] = updatePlotHistory( U, robot.particlePlots, count, 1 );
-
-
 
 return
 
