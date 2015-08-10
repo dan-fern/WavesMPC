@@ -1,5 +1,7 @@
 function [ Mx, Mz ] = loadAddedMass( z )
 
+z = abs(z);
+
 if z >= 5 && z < 45
     fileZ = round(z, -1);
 elseif z < 5

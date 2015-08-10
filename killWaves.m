@@ -9,6 +9,7 @@ if count == qualifier
     spectra.rho = 1030;
 
     iterations = numel(t) - count + 1;
+    iterations( iterations ==  numel(t)) = numel(t) - 1;
     spectra.eta(end-iterations:end) = 0;
 
     [ spectra.w, spectra.L, spectra.k ] = dispersion( spectra.d, spectra.T, 9.81 );

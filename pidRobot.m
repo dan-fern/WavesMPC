@@ -3,18 +3,18 @@ function [ robot ] = pidRobot( t, robot, spectra, count )
 dt = t(2) - t(1);
 
 KpX = 0.35; KpZ = 0.3; 
-%KiX = 0; KiZ = 0;
+KiX = 0; KiZ = 0;
 KdX = 1; KdZ = 1; 
 
 pErrorX = robot.errors.pErrorX;
 pErrorZ = robot.errors.pErrorZ;
 dErrorX = robot.errors.dErrorX;
 dErrorZ = robot.errors.dErrorZ;
-%iErrorX
-%iErrorZ
+iErrorX = robot.errors.iErrorX;
+iErrorZ = robot.errors.iErrorZ;
 
-gainsX = KpX * pErrorX + KdX * dErrorX;% + KiX * iErrorX;
-gainsZ = KpZ * pErrorZ + KdZ * dErrorZ;% + KiZ * iErrorZ;
+gainsX = KpX * pErrorX + KdX * dErrorX + KiX * iErrorX;
+gainsZ = KpZ * pErrorZ + KdZ * dErrorZ + KiZ * iErrorZ;
 
 gainsX( gainsX >=  1) =  1;
 gainsX( gainsX <= -1) = -1;
@@ -70,13 +70,7 @@ robot.pz = odeDisplacement( robot.pz, yz, tz );
 Y = [ robot.px, robot.pz, robot.vx, robot.vz, robot.ax, robot.az ]; 
 [ robot.robotPlots ] = updatePlotHistory( Y, robot.robotPlots, count, 1 );
 
-robot.errors.pErrorX = robot.DC(1) - robot.px;
-robot.errors.pErrorZ = robot.DC(2) - robot.pz;
-robot.errors.dErrorX = robot.errors.pErrorX - pErrorX;
-robot.errors.dErrorZ = robot.errors.pErrorZ - pErrorZ;
-
-robot.errorPlots.pErrorX(count) = robot.errors.pErrorX;
-robot.errorPlots.pErrorZ(count) = robot.errors.pErrorZ;
+[ robot ] = updateErrors( robot, count, pErrorX, pErrorZ );
 
 tempPx = robot.particlePlots.px(count) + robot.particles.vx(count) * dt;
 tempPz = robot.particlePlots.pz(count) + robot.particles.vz(count) * dt;

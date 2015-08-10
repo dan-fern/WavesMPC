@@ -46,13 +46,7 @@ robot.pz = odeDisplacement( robot.pz, yz, tz );
 Y = [ robot.px, robot.pz, robot.vx, robot.vz, robot.ax, robot.az ]; 
 [ robot.robotPlots ] = updatePlotHistory( Y, robot.robotPlots, count, 1 );
 
-robot.errors.pErrorX = robot.DC(1) - robot.px;
-robot.errors.pErrorZ = robot.DC(2) - robot.pz;
-robot.errors.dErrorX = robot.errors.pErrorX - pErrorX;
-robot.errors.dErrorZ = robot.errors.pErrorZ - pErrorZ;
-
-robot.errorPlots.pErrorX(count) = robot.errors.pErrorX;
-robot.errorPlots.pErrorZ(count) = robot.errors.pErrorZ;
+[ robot ] = updateErrors( robot, count, pErrorX, pErrorZ );
 
 tempPx = robot.particlePlots.px(count) + robot.particles.vx(count) * dt;
 tempPz = robot.particlePlots.pz(count) + robot.particles.vz(count) * dt;
@@ -61,7 +55,7 @@ tempVz = robot.particles.vz(count+1);
 tempAx = robot.particles.ax(count+1);
 tempAz = robot.particles.az(count+1);
 
-U = [tempPx, tempPz, tempVx, tempVz, tempAx, tempAz];
+U = [ tempPx, tempPz, tempVx, tempVz, tempAx, tempAz ];
 [ robot.particlePlots ] = updatePlotHistory( U, robot.particlePlots, count, 1 );
 
 

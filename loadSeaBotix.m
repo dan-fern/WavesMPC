@@ -16,7 +16,7 @@ robot.aA = degtorad(45); %Aft Thruster Angle
 robot.vA = degtorad(20); %vertical Thruster Angle
 robot.Tmax = 30; %max thrust per motor
 robot.mDry = 22; %dry mass in kg in air
-[ robot.mAdx, robot.mAdz ] = loadAddedMass( 20 ); %added mass terms for x/z
+[ robot.mAdx, robot.mAdz ] = loadAddedMass( IC(2) ); %added mass for x/z
 %robot.mAdx = 9;
 %robot.mAdz = 70;
 
@@ -24,6 +24,8 @@ robot.errors.pErrorX = robot.DC(1) - robot.px;
 robot.errors.pErrorZ = robot.DC(2) - robot.pz;
 robot.errors.dErrorX = robot.errors.pErrorX;
 robot.errors.dErrorZ = robot.errors.pErrorZ;
+robot.errors.iErrorX = robot.errors.pErrorX;
+robot.errors.iErrorZ = robot.errors.pErrorZ;
 
 robot.robotPlots.px = zeros(1,numel(t)) + robot.px;
 robot.robotPlots.pz = zeros(1,numel(t)) + robot.pz;
@@ -41,6 +43,8 @@ robot.particlePlots.az = zeros(1,numel(t)) + robot.az;
 
 robot.errorPlots.pErrorX = zeros(1,numel(t)) + robot.errors.pErrorX;
 robot.errorPlots.pErrorZ = zeros(1,numel(t)) + robot.errors.pErrorZ;
+robot.errorPlots.iErrorX = zeros(1,numel(t)) + robot.errors.iErrorX;
+robot.errorPlots.iErrorZ = zeros(1,numel(t)) + robot.errors.iErrorZ;
 
 return 
 

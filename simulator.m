@@ -1,12 +1,17 @@
-function simulator( t, eta, d, IC, plotData )
+function simulator( t, eta, d, IC, DC, plotData )
 
 figure('units','normalized','outerposition',[0 0 1 1]);
 
 tVis = -2.5:0.5:t(end);
+swlVis = zeros(1,numel(tVis));
 etaVis = zeros(1,numel(tVis));
 start = numel(etaVis) - numel(eta) + 1;
 etaVis(start:end) = eta;
-swlVis = zeros(1,numel(tVis));
+if max(eta) == 0
+    yLimit = 2.5;
+else
+    yLimit = eta(eta==max(eta)) + 0.5;
+end
 
 for i = 1:numel(t)-9
     px = plotData.px(i);
@@ -20,11 +25,11 @@ for i = 1:numel(t)-9
     plot( tVis(i+5:i+10),etaVis(i+5:i+10), '--b', 'LineWidth', 4 );
     hold on;
     baseX = [ tVis(i+10), tVis(i) ];
-    baseY = [ -eta(eta==max(eta)) - 0.5, -eta(eta==max(eta)) - 0.5 ];
+    baseY = [ -yLimit, -yLimit ];
     fill([tVis(i:i+10), baseX], [etaVis(i:i+10), baseY], 'c', 'EdgeColor', 'None');
     set(gca,'XTick',[]); 
     ylabel('Wave Amplitude, m');
-    ylim([( -eta(eta==max(eta))) - 0.5, eta(eta==max(eta)) + 0.5]);
+    ylim([ -yLimit, yLimit ]);
     hold on; 
     plot( tVis(i:i+10), swlVis(i:i+10), 'LineStyle', '-.' ); 
     hold off;
@@ -34,13 +39,13 @@ for i = 1:numel(t)-9
     set(gca,'YTickLabel',get(gca,'YTickLabel'),'fontsize',16);  
     
     subplot(4,1,[2,3,4])
-    plot( IC(1), IC(2), 'xg', 'LineWidth', 1, 'Markers', 20 ); 
+    plot( DC(1), DC(2), 'xg', 'LineWidth', 1, 'Markers', 20 ); 
     hold on;
     plot( px, pz, 'xg', 'LineWidth', 4, 'Markers', 20 ); 
     hold on;
     quiver( px, pz, vx, vz, '-m', 'AutoScaleFactor', 2, 'LineWidth', 2, ...
         'MaxHeadSize', 2 );
-    axis([-10, 10, IC(2)-10, IC(2)+10]); 
+    axis([-10, 10, DC(2)-10, DC(2)+10]); 
     grid on;
     xloc = strcat(' x =  ', num2str(px, '%.2f'), 'm, ');
     zloc = strcat(' z =  ', num2str(pz, '%.2f'), 'm');
