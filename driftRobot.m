@@ -27,10 +27,10 @@ vz = robot.particles.vz(count); az = robot.particles.az(count);
 
 
 x2dot = @(tx,x1dot) ...
-    (mAdx*ax + rho*Ax*Cd/2 * abs(x1dot-vx) * (x1dot-vx)) / -(mDry+mAdx)/5;
+    (mAdx*ax + rho*Ax*Cd/2 * abs(x1dot-vx) * (x1dot-vx)) / -(mDry+mAdx)/3;
 
 z2dot = @(tz,z1dot) ...
-    (mAdz*az + rho*Az*Cd/2 * abs(z1dot-vz) * (z1dot-vz)) / -(mDry+mAdz)/5;
+    (mAdz*az + rho*Az*Cd/2 * abs(z1dot-vz) * (z1dot-vz)) / -(mDry+mAdz)/3;
 
 [ tx, yx ] = ode45( x2dot, [0 dt], robot.vx );
 [ tz, yz ] = ode45( z2dot, [0 dt], robot.vz );

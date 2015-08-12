@@ -3,8 +3,8 @@ function [ robot ] = pidRobot( t, robot, spectra, count )
 dt = t(2) - t(1);
 
 KpX = 0.35; KpZ = 0.3; 
-KiX = 0; KiZ = 0;
-KdX = 1; KdZ = 1; 
+KiX = 0.0; KiZ = 0.0;
+KdX = 2.7; KdZ = 3.2; 
 
 pErrorX = robot.errors.pErrorX;
 pErrorZ = robot.errors.pErrorZ;

@@ -1,6 +1,9 @@
 function spectra = killWaves( t, spectra, count, qualifier )
 
-if count == qualifier
+if count ~= qualifier
+    return
+    
+else
     spectra.d = 50;
     spectra.T = 10000;
     spectra.H = .000001;
@@ -14,7 +17,4 @@ if count == qualifier
 
     [ spectra.w, spectra.L, spectra.k ] = dispersion( spectra.d, spectra.T, 9.81 );
     
-else
-    return
-
 end

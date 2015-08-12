@@ -10,9 +10,9 @@ clear variables
 warning('off', 'MATLAB:odearguments:InconsistentDataType')
 
 tic
-IC = [5, -12, 0, 0, 0, 0]; %all initial conditions, pos, vel, acc (x and z)
+IC = [5, -14, 0, 0, 0, 0]; %all initial conditions, pos, vel, acc (x and z)
 DC = [0, -20, 0, 0, 0, 0]; %all desired conditions, pos, vel, acc (x and z)
-t = 0.5:0.5:55; 
+t = 0.2:0.2:42;
 x0 = IC(1); z0 = IC(2);
 
 waves = loadTempWaves( );
@@ -26,11 +26,11 @@ volturnus = loadSeaBotix( t, IC, DC );
 counter = 1; 
 U = [ IC(1), IC(2), seaParticles.vx(1), seaParticles.vz(1), seaParticles.ax(1), seaParticles.az(1) ];
 [ volturnus.particlePlots ] = updatePlotHistory( U, volturnus.particlePlots, counter, 0 );
-wavesOff = numel(t) - 90;
+wavesOff = numel(t) - 150;
 %wavesOff = 1;
-controllerOn = numel(t) - 79;
+controllerOn = numel(t) - 149;
 while counter ~= numel(t)
-    waves = killWaves( t, waves, counter, wavesOff );
+    [ waves ] = killWaves( t, waves, counter, wavesOff );
     [ volturnus ] = driftRobot( t, volturnus, waves, counter );
     if counter == controllerOn
         while counter ~= numel(t)
@@ -48,7 +48,7 @@ clear counter U
 
 toc
 
-%simulator( t, waves.eta, waves.d, IC, DC, volturnus.robotPlots );
+simulator( t, waves.eta, waves.d, DC, volturnus.robotPlots );
 
 
 temp1 = [ volturnus.robotPlots.vx; volturnus.particlePlots.vx; ];

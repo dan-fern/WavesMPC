@@ -1,8 +1,8 @@
-function simulator( t, eta, d, IC, DC, plotData )
+function simulator( t, eta, d, DC, plotData )
 
-figure('units','normalized','outerposition',[0 0 1 1]);
+dt = t(2) - t(1);
 
-tVis = -2.5:0.5:t(end);
+tVis = -5*dt:dt:t(end);
 swlVis = zeros(1,numel(tVis));
 etaVis = zeros(1,numel(tVis));
 start = numel(etaVis) - numel(eta) + 1;
@@ -12,6 +12,8 @@ if max(eta) == 0
 else
     yLimit = eta(eta==max(eta)) + 0.5;
 end
+
+figure('units','normalized','outerposition',[0 0 1 1]);
 
 for i = 1:numel(t)-9
     px = plotData.px(i);
@@ -27,15 +29,16 @@ for i = 1:numel(t)-9
     baseX = [ tVis(i+10), tVis(i) ];
     baseY = [ -yLimit, -yLimit ];
     fill([tVis(i:i+10), baseX], [etaVis(i:i+10), baseY], 'c', 'EdgeColor', 'None');
-    set(gca,'XTick',[]); 
-    ylabel('Wave Amplitude, m');
-    ylim([ -yLimit, yLimit ]);
     hold on; 
     plot( tVis(i:i+10), swlVis(i:i+10), 'LineStyle', '-.' ); 
     hold off;
     line( [tVis(i+5),tVis(i+5)], [-10,10],'LineWidth', 2, 'Color', 'r' );
     titles = strcat('Simulator at t =  ', num2str(tVis(i+5), '%.0f'), ' seconds.');
     title(titles, 'FontSize', 24);
+    xlim( [tVis(i), tVis(i+10)] );
+    set(gca,'XTick',[]); 
+    ylim([ -yLimit, yLimit ]);
+    ylabel('Wave Amplitude, m');
     set(gca,'YTickLabel',get(gca,'YTickLabel'),'fontsize',16);  
     
     subplot(4,1,[2,3,4])
@@ -58,10 +61,10 @@ for i = 1:numel(t)-9
     set(gca, 'pos', p); set(gca,'color','c');
     set(findobj('color','g'),'Color',[0 0.6 0]);
     line( [0,0], [(-1*d),0],'LineWidth', 2, 'Color', 'r' );
-    if i == 1
-        pause(.5);
+    if i ~= 1
+        pause(.005);
     else
-        pause(.05); 
+        pause(.5);
     end
     hold off;
 end
