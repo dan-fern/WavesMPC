@@ -1,6 +1,7 @@
 function [ robot ] = pidRobot( t, robot, spectra, count )
 
 dt = t(2) - t(1);
+x = robot.px; z = robot.pz; 
 
 KpX = 0.35; KpZ = 0.3; 
 KiX = 0.0; KiZ = 0.0;
@@ -35,6 +36,12 @@ mAdx = robot.mAdx;                  %robot added mass in x
 mAdz = robot.mAdz;                  %robot added mass in z
 Ax = robot.width * robot.height;    %incident area in x
 Az = robot.length * robot.width;    %incident area in z
+
+if count ~= 1
+    [ robot.particles ] = getRobotParticles( t, x, z, spectra, robot.particles, count );
+else
+    [ robot.particles ] = getSeaStateParticles( t, x, z, spectra );
+end
 
 vx = robot.particles.vx(count); ax = robot.particles.ax(count);
 vz = robot.particles.vz(count); az = robot.particles.az(count);
