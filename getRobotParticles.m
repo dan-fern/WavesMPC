@@ -6,7 +6,12 @@
 
 function [ particles ] = getRobotParticles( t, x, z, spectra, particles, count )
 
-iterations = numel(t) - count + 1;
+if numel(t) ~= 1
+    iterations = numel(t) - count + 1;
+else
+    iterations = 1;
+end
+
 g = 9.81; 
 vx = zeros(1,numel(t)); vy = zeros(1,numel(t)); vz = zeros(1,numel(t));
 ax = zeros(1,numel(t)); ay = zeros(1,numel(t)); az = zeros(1,numel(t));
@@ -83,12 +88,23 @@ for i = 1:numel(T)
     end
 end
 
-%vx = vx -0.01;
-particles.vx(end-iterations:end) = vx(end-iterations:end); 
-particles.vy(end-iterations:end) = vy(end-iterations:end); 
-particles.vz(end-iterations:end) = vz(end-iterations:end);
-particles.ax(end-iterations:end) = ax(end-iterations:end); 
-particles.ay(end-iterations:end) = ay(end-iterations:end); 
-particles.az(end-iterations:end) = az(end-iterations:end);
+if numel(t) ~= 1
+    %vx = vx -0.01;
+    particles.vx(end-iterations:end) = vx(end-iterations:end); 
+    particles.vy(end-iterations:end) = vy(end-iterations:end); 
+    particles.vz(end-iterations:end) = vz(end-iterations:end);
+    particles.ax(end-iterations:end) = ax(end-iterations:end); 
+    particles.ay(end-iterations:end) = ay(end-iterations:end); 
+    particles.az(end-iterations:end) = az(end-iterations:end);
+else
+    particles.vx(count) = vx;
+    particles.vy(count) = vy;
+    particles.vz(count) = vz;
+    particles.ax(count) = ax;
+    particles.ay(count) = ay;
+    particles.az(count) = az;
+end
+
+return
 
 end

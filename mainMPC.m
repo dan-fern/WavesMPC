@@ -73,6 +73,6 @@ plot( t(controllerOn-1:end), temp2(2,controllerOn-1:end), 'b' );
 line( [t(controllerOn-1),t(end)], [0,0],'LineWidth', 1, 'Color', 'r' );
 title('Position Error, z');
 
-clear temp1 temp2
+clear temp1 temp2 x0 z0
 
 
