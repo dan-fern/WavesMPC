@@ -1,7 +1,7 @@
 function [ robot ] = updateErrors( robot, count, pErrX, pErrZ )
 
-robot.errors.pErrorX = robot.DC(1) - robot.px;
-robot.errors.pErrorZ = robot.DC(2) - robot.pz;
+robot.errors.pErrorX = robot.DC.px - robot.state.px;
+robot.errors.pErrorZ = robot.DC.pz - robot.state.pz;
 robot.errorPlots.pErrorX(count) = robot.errors.pErrorX;
 robot.errorPlots.pErrorZ(count) = robot.errors.pErrorZ;
 

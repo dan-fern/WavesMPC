@@ -1,5 +1,8 @@
 function [ robot ] = getForecast( dt, robot, spectra, count, input )
 
+input( input >=  1) =  1; 
+input( input <= -1) = -1;
+
 motorInputX = input(1); robot.uX = motorInputX;
 motorInputZ = input(2); robot.uZ = motorInputZ;
 
@@ -35,18 +38,19 @@ z2dot = @(tz,z1dot) ...
     ((mAdz*az + rho*Az*Cd/2 * abs(z1dot-vz) * (z1dot-vz)) / -(mDry+mAdz) ...
     + (Tmax/mDry) * Bz * uz)/3;
 
-[ tx, yx ] = ode45( x2dot, [0 dt], robot.vx );
-[ tz, yz ] = ode45( z2dot, [0 dt], robot.vz );
+[ tx, yx ] = ode45( x2dot, [0 dt], robot.state.vx );
+[ tz, yz ] = ode45( z2dot, [0 dt], robot.state.vz );
 
 
-robot.ax = x2dot( tx(end), yx(end) );
-robot.az = z2dot( tz(end), yz(end) );
-robot.vx = yx(end); 
-robot.vz = yz(end);
-robot.px = odeDisplacement( robot.px, yx, tx );
-robot.pz = odeDisplacement( robot.pz, yz, tz );
+robot.state.ax = x2dot( tx(end), yx(end) );
+robot.state.az = z2dot( tz(end), yz(end) );
+robot.state.vx = yx(end); 
+robot.state.vz = yz(end);
+robot.state.px = odeDisplacement( robot.state.px, yx, tx );
+robot.state.pz = odeDisplacement( robot.state.pz, yz, tz );
 
-Y = [ robot.px, robot.pz, robot.vx, robot.vz, robot.ax, robot.az ]; 
+Y = [ robot.state.px, robot.state.pz, robot.state.vx, robot.state.vz, ...
+    robot.state.ax, robot.state.az ]; 
 [ robot.robotPlots ] = updatePlotHistory( Y, robot.robotPlots, count, 1 );
 
 pErrorX = robot.errors.pErrorX;

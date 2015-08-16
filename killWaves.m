@@ -1,4 +1,4 @@
-function spectra = killWaves( t, spectra, count, qualifier )
+function [ spectra ] = killWaves( t, spectra, count, qualifier )
 
 if count ~= qualifier
     return

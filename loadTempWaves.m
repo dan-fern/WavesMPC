@@ -1,4 +1,4 @@
-function spectra = loadTempWaves()
+function [ spectra ] = loadTempWaves( )
 
 spectra.d = 50;
 spectra.T = [10, 8, 12, 11, 6];

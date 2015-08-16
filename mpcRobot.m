@@ -5,8 +5,8 @@ dt = t(2) - t(1);
 tHorizon = 25 * dt;
 tSteps = tHorizon / dt;
 %tComp = 5 * dt; 
-decision = 10;
-x = robot.px; z = robot.pz;
+decision = 200;
+x = robot.state.px; z = robot.state.pz;
 start = count;
 stop = count + tSteps;
 
@@ -20,7 +20,7 @@ end
 
 u0 = zeros( tSteps, 2 );
 u1 = zeros( size( u0 ) );
-s0 = zeros( tSteps, 2 ); 
+s0 = zeros( tSteps+1, 2 ); 
 s0(:,1) = x; s0(:,2) = z;
 s1 = zeros( size( s0 ) );
 d0 = rand( tSteps, 2 );
@@ -29,16 +29,19 @@ J1 = zeros( size( J0 ) );
 
 for i = 1:tSteps
     tempCount = count + i - 1;
-    x = tempBot.px; z = tempBot.pz;
+    x = tempBot.state.px; z = tempBot.state.pz;
     [ tempBot.particles ] = getRobotParticles( t(tempCount), x, z, ...
         spectra, tempBot.particles, tempCount );
     [ tempBot ] = pidRobot( t, tempBot, spectra, tempCount );
-    u0(i,1) = tempBot.uX; u0(i,2) = tempBot.uZ;
-    s0(i,1) = tempBot.px; s0(i,2) = tempBot.pz;
-    [ J0(i,:) ] = getCost( tempBot.DC, s0(i,:) ); 
+    u0(i,1) = tempBot.uX; 
+    u0(i,2) = tempBot.uZ;
+    s0(i+1,1) = tempBot.state.px; 
+    s0(i+1,2) = tempBot.state.pz;
+    [ J0(i,:) ] = getCost( tempBot.DC, s0(i+1,:) ); 
 end
 
 for j = 1:decision %or decision criteria
+    tempBot.state = robot.state;
     if j ~= 1
         d = getJacobian( J0, J1, u0, u1 );
         u0 = u1;
@@ -53,19 +56,23 @@ for j = 1:decision %or decision criteria
         end
     else
         d1 = d0;
+        s1(1,1) = s0(1,1); 
+        s1(1,2) = s0(1,2);
     end
-    u1 = u0 + d1;
-    u1( u1 >=  1) =  1; 
-    u1( u1 <= -1) = -1;
+    u1 = u0 - d1;
+%     u1( u1 >=  1) =  1; 
+%     u1( u1 <= -1) = -1;
+    
     for i = 1:tSteps
         tempCount = count + i - 1;
         [ tempBot.particles ] = getRobotParticles( t(tempCount), ...
             s0(i,1), s0(i,2), spectra, tempBot.particles, tempCount );
         [ tempBot ] = getForecast( dt, tempBot, spectra, tempCount, u1(i,:) );
-        s1(i,1) = tempBot.px; s1(i,2) = tempBot.pz;
-        [ J1(i,:) ] = getCost( tempBot.DC, s1(i,:) );
+        s1(i+1,1) = tempBot.state.px; 
+        s1(i+1,2) = tempBot.state.pz;
+        [ J1(i,:) ] = getCost( tempBot.DC, s1(i+1,:) );
     end
-
+    s1
 end
 
 robot = tempBot;
