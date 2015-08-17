@@ -1,4 +1,4 @@
-function [ robot ] = loadSeaBotix( t, IC, DC )
+function [ robot ] = loadSeaBotix( t, IC, DC, seaParticles )
 
 [ robot.state.px, robot.IC.px ] = deal( IC(1) );
 [ robot.state.pz, robot.IC.pz ] = deal( IC(2) );
@@ -12,6 +12,7 @@ robot.DC.vx = DC(3);
 robot.DC.vz = DC(4);
 robot.DC.ax = DC(5);
 robot.DC.az = DC(6);
+robot.particles = seaParticles;
 robot.length = 0.7; 
 robot.width = 0.4; 
 robot.height = 0.4;

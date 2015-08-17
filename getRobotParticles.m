@@ -6,7 +6,9 @@
 
 function [ particles ] = getRobotParticles( t, x, z, spectra, particles, count )
 
-if numel(t) ~= 1
+if count == 1
+    return
+elseif numel(t) ~= 1
     iterations = numel(t) - count + 1;
 else
     iterations = 1;

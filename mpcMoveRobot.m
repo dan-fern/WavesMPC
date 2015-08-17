@@ -1,29 +1,10 @@
-function [ robot ] = pidRobot( t, robot, spectra, count )
+function [ robot ] = mpcMoveRobot( dt, robot, spectra, count, input )
 
-dt = t(2) - t(1);
-x = robot.state.px; z = robot.state.pz; 
+input( input >=  1) =  1; 
+input( input <= -1) = -1;
 
-KpX = 0.35; KpZ = 0.3; 
-KiX = 0.0; KiZ = 0.0;
-KdX = 2.7; KdZ = 3.2; 
-
-pErrorX = robot.errors.pErrorX;
-pErrorZ = robot.errors.pErrorZ;
-dErrorX = robot.errors.dErrorX;
-dErrorZ = robot.errors.dErrorZ;
-iErrorX = robot.errors.iErrorX;
-iErrorZ = robot.errors.iErrorZ;
-
-gainsX = KpX * pErrorX + KdX * dErrorX + KiX * iErrorX;
-gainsZ = KpZ * pErrorZ + KdZ * dErrorZ + KiZ * iErrorZ;
-
-gainsX( gainsX >=  1) =  1;
-gainsX( gainsX <= -1) = -1;
-gainsZ( gainsZ >=  1) =  1;
-gainsZ( gainsZ <= -1) = -1;
-
-motorInputX = gainsX; robot.uX = motorInputX;
-motorInputZ = gainsZ; robot.uZ = motorInputZ;
+motorInputX = input(1); robot.uX = motorInputX;
+motorInputZ = input(2); robot.uZ = motorInputZ;
 
 rho = spectra.rho;
 
@@ -36,12 +17,6 @@ mAdx = robot.mAdx;                  %robot added mass in x
 mAdz = robot.mAdz;                  %robot added mass in z
 Ax = robot.width * robot.height;    %incident area in x
 Az = robot.length * robot.width;    %incident area in z
-
-if count ~= 1
-    [ robot.particles ] = getRobotParticles( t, x, z, spectra, robot.particles, count );
-else
-    [ robot.particles ] = getSeaStateParticles( t, x, z, spectra );
-end
 
 vx = robot.particles.vx(count); ax = robot.particles.ax(count);
 vz = robot.particles.vz(count); az = robot.particles.az(count);
@@ -78,6 +53,8 @@ Y = [ robot.state.px, robot.state.pz, robot.state.vx, robot.state.vz, ...
     robot.state.ax, robot.state.az ]; 
 [ robot.robotPlots ] = updatePlotHistory( Y, robot.robotPlots, count, 1 );
 
+pErrorX = robot.errors.pErrorX;
+pErrorZ = robot.errors.pErrorZ;
 [ robot ] = updateErrors( robot, count, pErrorX, pErrorZ );
 
 tempPx = robot.particlePlots.px(count) + robot.particles.vx(count) * dt;

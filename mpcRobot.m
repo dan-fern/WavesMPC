@@ -1,20 +1,18 @@
-function [ robot ] = mpcRobot( t, robot, spectra, count )
+function [ robot, u1 ] = getForecast( t, robot, spectra, count )
 
 tempBot = robot;
-dt = t(2) - t(1);
-tHorizon = 25 * dt;
-tSteps = tHorizon / dt;
-%tComp = 5 * dt; 
+tSteps = t.tSteps;
+%tComp = t.tComp; 
 decision = 200;
 x = robot.state.px; z = robot.state.pz;
 start = count;
 stop = count + tSteps;
 
 if count ~= 1
-    [ tempBot.particles ] = getRobotParticles( t(start:stop), x, z, ...
+    [ tempBot.particles ] = getRobotParticles( t.t(start:stop), x, z, ...
         spectra, tempBot.particles, count );
 else
-    [ tempBot.particles ] = getSeaStateParticles( t(start:stop), x, z, ...
+    [ tempBot.particles ] = getSeaStateParticles( t.t(start:stop), x, z, ...
         spectra );
 end
 
@@ -30,9 +28,9 @@ J1 = zeros( size( J0 ) );
 for i = 1:tSteps
     tempCount = count + i - 1;
     x = tempBot.state.px; z = tempBot.state.pz;
-    [ tempBot.particles ] = getRobotParticles( t(tempCount), x, z, ...
+    [ tempBot.particles ] = getRobotParticles( t.t(tempCount), x, z, ...
         spectra, tempBot.particles, tempCount );
-    [ tempBot ] = pidRobot( t, tempBot, spectra, tempCount );
+    [ tempBot ] = pidMoveRobot( t.t, tempBot, spectra, tempCount );
     u0(i,1) = tempBot.uX; 
     u0(i,2) = tempBot.uZ;
     s0(i+1,1) = tempBot.state.px; 
@@ -47,32 +45,32 @@ for j = 1:decision %or decision criteria
         u0 = u1;
         s0 = s1;
         J0 = J1;
-        if mean(abs(d(:,1))) >= 0.01 && mean(abs(d(:,2))) >= 0.01
+        if mean(abs(d(:,1))) >= 0.005 && mean(abs(d(:,2))) >= 0.005
             d1 = d;
         else 
             disp( 'KICK OUT' );
-            d1 = d;
-            %break
+            break
         end
     else
         d1 = d0;
         s1(1,1) = s0(1,1); 
         s1(1,2) = s0(1,2);
     end
-    u1 = u0 - d1;
-%     u1( u1 >=  1) =  1; 
-%     u1( u1 <= -1) = -1;
-    
+    u1 = u0 - d1; 
     for i = 1:tSteps
         tempCount = count + i - 1;
-        [ tempBot.particles ] = getRobotParticles( t(tempCount), ...
+        [ tempBot.particles ] = getRobotParticles( t.t(tempCount), ...
             s0(i,1), s0(i,2), spectra, tempBot.particles, tempCount );
-        [ tempBot ] = getForecast( dt, tempBot, spectra, tempCount, u1(i,:) );
+        [ tempBot ] = mpcMoveRobot( t.dt, tempBot, spectra, tempCount, u1(i,:) );
         s1(i+1,1) = tempBot.state.px; 
         s1(i+1,2) = tempBot.state.pz;
         [ J1(i,:) ] = getCost( tempBot.DC, s1(i+1,:) );
     end
-    s1
+    if find(isnan(s1)==1) > 0
+    disp(j);
+    u1 = u0;
+    break
+    end
 end
 
 robot = tempBot;

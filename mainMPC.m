@@ -10,7 +10,7 @@ clear variables
 warning('off', 'MATLAB:odearguments:InconsistentDataType')
 
 tic
-IC = [5, -14, 0, 0, 0, 0]; %all initial conditions, pos, vel, acc (x and z)
+IC = [0, -20, 0, 0, 0, 0]; %all initial conditions, pos, vel, acc (x and z)
 DC = [0, -20, 0, 0, 0, 0]; %all desired conditions, pos, vel, acc (x and z)
 [ time ] = loadTimeParameters( );
 
@@ -19,21 +19,21 @@ waves.swl = zeros(1, numel(time.t)); %still water line
 
 [ seaParticles, waves ] = getSeaStateParticles( time.t, IC(1), IC(2), waves );
 
-volturnus = loadSeaBotix( time.t, IC, DC );
+volturnus = loadSeaBotix( time.t, IC, DC, seaParticles );
 %[ dragForces ] = getDragForces( t, seaParticles, volturnus, waves.rho );
 
 counter = 1; 
 U = [ IC(1), IC(2), seaParticles.vx(1), seaParticles.vz(1), seaParticles.ax(1), seaParticles.az(1) ];
 [ volturnus.particlePlots ] = updatePlotHistory( U, volturnus.particlePlots, counter, 0 );
-wavesOff = numel(time.t) - 180;
+%wavesOff = numel(time.t) - 180;
 %wavesOff = 1;
 controllerOn = numel(time.t) - 149;
 while counter ~= numel(time.t)
-    [ waves ] = killWaves( time.t, waves, counter, wavesOff );
-    [ volturnus ] = driftRobot( time.t, volturnus, waves, counter );
+    %[ waves ] = killWaves( time.t, waves, counter, wavesOff );
+    [ volturnus ] = driftMoveRobot( time.t, volturnus, waves, counter );
     if counter == controllerOn
         while counter ~= numel(time.t)
-            [ volturnus ] = pidRobot( time.t, volturnus, waves, counter );
+            [ volturnus ] = pidMoveRobot( time.t, volturnus, waves, counter );
             counter = counter + 1;
         end
         pErrorX = volturnus.errors.pErrorX;
@@ -43,7 +43,7 @@ while counter ~= numel(time.t)
     end
     counter = counter + 1;
 end
-clear counter U
+clear counter U pErrorX pErrorZ
 
 toc
 
