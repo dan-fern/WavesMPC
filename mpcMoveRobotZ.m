@@ -4,7 +4,7 @@ input( input >=  1) =  1;
 input( input <= -1) = -1;
 
 %motorInputX = input(1); robot.uX = motorInputX;
-motorInputZ = input(2); robot.uZ = motorInputZ;
+motorInputZ = input; robot.uZ = motorInputZ;
 
 rho = spectra.rho;
 

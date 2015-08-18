@@ -26,8 +26,8 @@ U = [ IC(1), IC(2), seaParticles.vx(1), seaParticles.vz(1), seaParticles.ax(1), 
 
 while counter ~= numel(time.t)-time.tSteps %&& counter < numel(time.t)-time.tSteps
     tic
-    [ input, time.tCalc ] = getForecast( time, volturnus, waves, counter );
-    %[ input, time.tCalc ] = getForecastSplit( time, volturnus, waves, counter );
+    %[ input, time.tCalc ] = getForecast( time, volturnus, waves, counter );
+    [ input, time.tCalc ] = getForecastSplit( time, volturnus, waves, counter );
     [ volturnus ] = mpcMoveRobot( time.dt, volturnus, waves, counter, input(1,:) );
     counter = counter + 1;
 end
@@ -39,7 +39,7 @@ clear counter U pErrorX pErrorZ input
 %%
 tt = t(1:numel(time.t)-time.tSteps);
 etaeta = waves.eta(1:numel(time.t)-time.tSteps);
-%simulator( tt, etaeta, waves.d, DC, volturnus.robotPlots );
+simulator( tt, etaeta, waves.d, DC, volturnus.robotPlots );
 
 temp2 = [ volturnus.errorPlots.pErrorX; volturnus.errorPlots.pErrorZ ]; 
 figure('units','normalized','outerposition',[0 0 1 1]);

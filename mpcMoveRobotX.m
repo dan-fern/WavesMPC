@@ -3,7 +3,7 @@ function [ robot ] = mpcMoveRobotX( dt, robot, spectra, count, input )
 input( input >=  1) =  1; 
 input( input <= -1) = -1;
 
-motorInputX = input(1); robot.uX = motorInputX;
+motorInputX = input; robot.uX = motorInputX;
 %motorInputZ = input(2); robot.uZ = motorInputZ;
 
 rho = spectra.rho;
