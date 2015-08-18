@@ -36,8 +36,8 @@ for j = 1:decision %or decision criteria
         u0 = u1;
         s0 = s1;
         J0 = J1;
-        check = abs(d(1:5,1:2));
-        if check(:)<=0.01
+        check = abs(d(:,1:2));
+        if check(:)<=0.005
         %if mean(abs(d(:,1))) <= 0.005 && mean(abs(d(:,2))) <= 0.005
             disp( 'KICK OUT' );
             break
@@ -64,10 +64,13 @@ for j = 1:decision %or decision criteria
         disp(str);
         u1 = u0;
         break
+    elseif mod( j, 25 ) == 0
+        fprintf('*');
     end
 end
 
 disp(j);
+disp(toc);
 tCalc = toc;
 disp(count);
 
