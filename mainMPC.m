@@ -26,8 +26,7 @@ U = [ IC(1), IC(2), seaParticles.vx(1), seaParticles.vz(1), seaParticles.ax(1), 
 
 while counter ~= numel(time.t)-time.tSteps %&& counter < numel(time.t)-time.tSteps
     tic
-    %[ input, time.tCalc ] = getForecast( time, volturnus, waves, counter );
-    [ input, time.tCalc ] = getForecastSplit( time, volturnus, waves, counter );
+    [ input, time.tCalc ] = getForecast( time, volturnus, waves, counter );
     [ volturnus ] = mpcMoveRobot( time.dt, volturnus, waves, counter, input(1,:) );
     counter = counter + 1;
 end
