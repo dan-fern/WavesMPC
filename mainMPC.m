@@ -24,10 +24,13 @@ counter = 1;
 U = [ IC(1), IC(2), seaParticles.vx(1), seaParticles.vz(1), seaParticles.ax(1), seaParticles.az(1) ];
 [ volturnus.particlePlots ] = updatePlotHistory( U, volturnus.particlePlots, counter, 0 );
 
+oldInput = zeros( (time.tSteps-1), 2 ) + NaN;
+
 while counter ~= numel(time.t)-time.tSteps %&& counter < numel(time.t)-time.tSteps
     tic
-    [ input, time.tCalc ] = getForecast( time, volturnus, waves, counter );
+    [ input, time.tCalc ] = getForecast( time, volturnus, waves, counter, oldInput );
     [ volturnus ] = mpcMoveRobot( time.dt, volturnus, waves, counter, input(1,:) );
+    oldInput = input(2:end,:);
     counter = counter + 1;
 end
 pErrorX = volturnus.errors.pErrorX;

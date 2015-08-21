@@ -1,43 +1,44 @@
 %% Problem 3 C
 % with pre-whitening and post-coloring with the first-difference filter
 clc 
-clearvars
+clear all
 close all
 
-window_switch = 0;
+window_switch = 1;
 
 % Load the data
-%load('tempWaveData.mat');
+load('tempWaveData.mat');
 
+co2conc = awacs.heave(4,:);
+time1 = 0.5:0.5:numel(co2conc)/2; time1(1) = 0.5;
+time2 = 0.5:0.5:numel(co2conc)/2; time2(1) = 0.5;
+N = length(co2conc);
 
-%y = awacs.heave(4,:);
-%time1 = 0.5:0.5:numel(y)/2; time1(1) = 0.5;
-%time2 = 0.5:0.5:numel(y)/2; time2(1) = 0.5;
-time1 = 1:0.1:10;
-y = 1.2 * cos( 20 * time1 + pi/2 );
-figure
-plot(time1, y)
-N = length(y);
-%%
 if window_switch == 1;
-    y_2 = y;
-else
-    y_2 = y;
+    y_2 = co2conc;
 end
 
 % window the data with a bartlett data window
 if window_switch == 1;
-    y = bartlett(N).*y';
-    y_3 = y;
+    co2conc = bartlett(N).*co2conc';
+    y_3 = co2conc;
 end
 
+
+% Consider only the first 1020 observations
+%co2conc = co2conc(1:1020);
+%time = time(1:1020);
+
+% Apply the diff filter to pre-whiten the dataset
+y = diff(co2conc);
+time2(1) = [];
 
 % Remove the sample mean.
 y = y-mean(y);
 
 % Plot the original timeseries
 figure(1)
-plot(time1,y,'k');hold on
+plot(time2,y,'k');hold on
 xlabel('Days since 11/15/1958'); ylabel('Diff CO2 conc. (ppm)')
 title('CO2 concentration - First Difference','FontWeight','bold')
 
@@ -67,26 +68,6 @@ if window_switch == 1;
 
     Yj = Yj*(pre_var/post_var)^(.5);
 end
-
-index = fj >= 0;
-fj = fj(index);
-Yj = Yj(index);
-
-amp = 2*abs(Yj);
-
-Phase = atan((imag(Yj)./real(Yj)));
-
-%Recreate the timeseries
-eta = zeros(size(time1));
-for i = 1:numel(Yj)   
-    eta = eta + amp(i) * cos(2*pi*fj(i)*time1 +phase(i));
-end
-
-figure(2)
-plot(time1,y,'k');hold on
-plot(time1,eta,'r')
-
-asd
 
 % Calculate the 2-sided sample estimates of the power spectral density by
 % the Cooley-Turkey Method
