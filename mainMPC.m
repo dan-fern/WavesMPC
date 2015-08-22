@@ -26,7 +26,7 @@ U = [ IC(1), IC(2), seaParticles.vx(1), seaParticles.vz(1), seaParticles.ax(1), 
 
 oldInput = zeros( (time.tSteps-1), 2 ) + NaN;
 
-while counter ~= numel(time.t)-time.tSteps %&& counter < numel(time.t)-time.tSteps
+while counter ~= 2%numel(time.t)-time.tSteps %&& counter < numel(time.t)-time.tSteps
     tic
     [ input, time.tCalc ] = getForecast( time, volturnus, waves, counter, oldInput );
     [ volturnus ] = mpcMoveRobot( time.dt, volturnus, waves, counter, input(1,:) );
@@ -36,7 +36,7 @@ end
 pErrorX = volturnus.errors.pErrorX;
 pErrorZ = volturnus.errors.pErrorZ;
 [ volturnus ] = updateErrors( volturnus, counter, pErrorX, pErrorZ );
-clear counter U pErrorX pErrorZ input
+clear counter U pErrorX pErrorZ input oldInput
 
 %%
 tt = t(1:numel(time.t)-time.tSteps);
