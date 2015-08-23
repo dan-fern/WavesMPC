@@ -3,7 +3,7 @@ function [ u1, tCalc ] = getForecast( t, robot, spectra, count, oldInput )
 k = 0;
 tempBot = robot;
 tSteps = t.tSteps;
-decision = 1000;
+decision = 10000;
 resolution = 0.005;
 x = robot.state.px; z = robot.state.pz;
 
@@ -178,7 +178,7 @@ fprintf(num2str(j));
 fprintf('     & ');
 disp(k);
 disp(toc);
-tCalc = toc;
+tCalc = t.tCalc + toc;
 disp(u1);
 disp(count);
 disp('************************************************');

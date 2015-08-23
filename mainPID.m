@@ -10,15 +10,16 @@ clear variables
 warning('off', 'MATLAB:odearguments:InconsistentDataType')
 
 tic
-IC = [0, -20, 0, 0, 0, 0]; %all initial conditions, pos, vel, acc (x and z)
-DC = [0, -20, 0, 0, 0, 0]; %all desired conditions, pos, vel, acc (x and z)
+IC = [0, -15, 0, 0, 0, 0]; %all initial conditions, pos, vel, acc (x and z)
+DC = [0, -15, 0, 0, 0, 0]; %all desired conditions, pos, vel, acc (x and z)
 [ time ] = loadTimeParameters( );
+t = time.t;
 
 waves = loadTempWaves( );
 waves.swl = zeros(1, numel(time.t)); %still water line
 
 [ seaParticles, waves ] = getSeaStateParticles( time.t, IC(1), IC(2), waves );
-
+%figure; plot(t, waves.eta); xlabel('time, s'); ylabel('elevation, m');
 volturnus = loadSeaBotix( time.t, IC, DC, seaParticles );
 %[ dragForces ] = getDragForces( t, seaParticles, volturnus, waves.rho );
 
@@ -48,8 +49,8 @@ end
 clear counter U pErrorX pErrorZ
 
 toc
-
-%simulator( time.t, waves.eta, waves.d, DC, volturnus.robotPlots );
+%%
+simulator( time.t, waves.eta, waves.d, DC, volturnus.robotPlots );
 
 
 temp1 = [ volturnus.robotPlots.vx; volturnus.particlePlots.vx; ];

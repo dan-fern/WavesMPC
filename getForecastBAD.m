@@ -1,67 +1,22 @@
-function [ u1, tCalc ] = getForecast( t, robot, spectra, count, oldInput )
+function [ u1, tCalc ] = getForecastBAD( t, robot, spectra, count, oldInput )
 
 k = 0;
-tempBot = robot;
-tSteps = t.tSteps;
-decision = 1000;
-resolution = 0.005;
-x = robot.state.px; z = robot.state.pz;
-
-u0 = zeros( tSteps, 2 );
-u1 = zeros( size( u0 ) );
-s0 = zeros( tSteps+1, 2 ); 
-s0(:,1) = x; s0(:,2) = z;
-s1 = zeros( size( s0 ) );
-J0 = zeros( tSteps, 2 );
-J1 = zeros( size( J0 ) );
-%d0 = rand( tSteps, 2 );
-delta = zeros( tSteps, 2 ) + resolution/1000;
-%[ d0 ] = forecastGuess( t, spectra, count );
-
-if numel( find( isnan(oldInput) == 1 ) ) == 2*(tSteps-1)
-    tempBot.state = robot.state;
-    for i = 1:tSteps
-        tempCount = count + i - 1;
-        x = tempBot.state.px; z = tempBot.state.pz;
-        [ tempBot.particles ] = getRobotParticles( t.t(tempCount), x, z, ...
-            spectra, tempBot.particles, tempCount );
-        [ tempBot ] = pidMoveRobot( t.t, tempBot, spectra, tempCount );
-        u0(i,1) = tempBot.uX; 
-        u0(i,2) = tempBot.uZ;
-        s0(i+1,1) = tempBot.state.px; 
-        s0(i+1,2) = tempBot.state.pz;
-        [ J0(i,1) ] = getCost( tempBot.DC.px, s0(i+1,1) );
-        [ J0(i,2) ] = getCost( tempBot.DC.pz, s0(i+1,2) );
-    end
-else
-    tempBot.state = robot.state;
-    u0(1:(end-1),:) = oldInput;
-    for i = 1:tSteps-1
-        tempCount = count + i - 1;
-        [ tempBot.particles ] = getRobotParticles( t.t(tempCount), ...
-            s0(i,1), s0(i,2), spectra, tempBot.particles, tempCount );
-        [ tempBot ] = mpcMoveRobot( t.dt, tempBot, spectra, tempCount, u0(i,:) );
-        s0(i+1,1) = tempBot.state.px; 
-        s0(i+1,2) = tempBot.state.pz;
-        [ J0(i,1) ] = getCost( tempBot.DC.px, s0(i+1,1) );
-        [ J0(i,2) ] = getCost( tempBot.DC.pz, s0(i+1,2) );
-    end
-    tempCount = tempCount + 1;
-    [ tempBot.particles ] = getRobotParticles( t.t(tempCount), ...
-        s0(tSteps,1), s0(tSteps,2), spectra, tempBot.particles, tempCount );
-    [ tempBot ] = pidMoveRobot( t.t, tempBot, spectra, tempCount );
-    u0(end,1) = tempBot.uX;
-    u0(end,2) = tempBot.uZ;
-    s0(end,1) = tempBot.state.px;
-    s0(end,2) = tempBot.state.pz;
-    [ J0(end,1) ] = getCost( tempBot.DC.px, s0(end,1) );
-    [ J0(end,2) ] = getCost( tempBot.DC.pz, s0(end,2) );
-end
-u0( u0 >  1) =  1;
-u0( u0 < -1) = -1;
-
 nRow = 1;
 nTry = 1;
+tempBot = robot;
+tSteps = t.tSteps;
+decision = 10000;
+resolution = 0.005;
+
+[ u0, s0, J0 ] = intializeForecast( t, robot, spectra, count, oldInput ); 
+% u0
+% s0
+% J0
+
+u1 = zeros( nRow, 2 );
+s1 = zeros( size( s0 ) );
+J1 = zeros( nRow, 2 );
+delta = zeros( tSteps, 2 ) + resolution/1000;
 tempBot.state = robot.state;
 while nTry ~= decision && nRow ~= 3%tSteps + 1 %or decision criteria
     s1(1,1) = s0(1,1); 
@@ -69,10 +24,10 @@ while nTry ~= decision && nRow ~= 3%tSteps + 1 %or decision criteria
     u1(nRow,:) = u0(nRow,:) - delta(nRow,:);
     u1( u1 >  1) =  1; 
     u1( u1 < -1) = -1;
-    if sum( all( u0 == u1, 2 ) ) > 0
+    if sum( all( u0(nRow,:) == u1(nRow,:), 2 ) ) > 0
         fprintf('NO!! ');
         fprintf(num2str(nTry));
-        [ u1 ] = thresholdInput( u0, u1 );
+        [ u1 ] = thresholdInput( u0(nRow,:), u1(nRow,:) );
     end
     tempCount = count + nRow - 1;
     [ tempBot.particles ] = getRobotParticles( t.t(tempCount), ...
@@ -102,29 +57,32 @@ while nTry ~= decision && nRow ~= 3%tSteps + 1 %or decision criteria
         disp( str );
     elseif checkX  % THIS IS FOR Z
         delta(nRow,2) = deltaZ;
-        u0z = u0(:,2); 
-        u1z = u0z;
+        u0z = u0(nRow,2); 
         for k = nTry:decision
-            u1z(nRow) = u0z(nRow) - delta(nRow,2);
+            u1z = u0z - delta(nRow,2);
             u1z( u1z >=  1) =  1; 
             u1z( u1z <= -1) = -1;
+            k
+            delta(nRow,2)
             if sum( all( u0z == u1z, 2 ) ) > 0
                 [ u1z ] = thresholdInput( u0z, u1z );
             end
+            u0z
+            u1z
             tempCount = count + nRow - 1;
             [ tempBot.particles ] = getRobotParticles( t.t(tempCount), ...
                 s0(nRow,1), s0(nRow,2), spectra, tempBot.particles, tempCount );
-            [ tempBot ] = mpcMoveRobotZ( t.dt, tempBot, spectra, tempCount, u1z(nRow) );
+            [ tempBot ] = mpcMoveRobotZ( t.dt, tempBot, spectra, tempCount, u1z );
             s1(nRow+1,2) = tempBot.state.pz;
             [ J1(nRow,2) ] = getCost( tempBot.DC.pz, s1(nRow+1,2) );
-            [ deltaZ ] = getJacobian( J0(nRow,2), J1(nRow,2), u0z(nRow), u1z(nRow) );
-            u0z(nRow) = u1z(nRow);
+            [ deltaZ ] = getJacobian( J0(nRow,2), J1(nRow,2), u0z, u1z );
+            u0z = u1z;
             s0(nRow,2) = s1(nRow,2);
             J0(nRow,2) = J1(nRow,2);
             checkZ = abs(deltaZ(:));
             if checkZ(:) <= resolution
                 disp( ' KICK OUTTA Z' );
-                u1(nRow,2) = u1z(nRow);
+                u1(nRow,2) = u1z;
                 break
             else
                 delta(nRow,2) = deltaZ;
@@ -135,10 +93,9 @@ while nTry ~= decision && nRow ~= 3%tSteps + 1 %or decision criteria
         end
     elseif checkZ % THIS IS FOR X
         delta(nRow,1) = deltaX;
-        u0x = u0(:,1);
-        u1x = u0x;
+        u0x = u0(nRow,1);
         for k = nTry:decision
-            u1x(nRow) = u0x(nRow) - delta(nRow,1);
+            u1x = u0x - delta(nRow,1);
             u1x( u1x >=  1) =  1; 
             u1x( u1x <= -1) = -1;
             if sum( all( u0x == u1x, 2 ) ) > 0
@@ -147,17 +104,17 @@ while nTry ~= decision && nRow ~= 3%tSteps + 1 %or decision criteria
             tempCount = count + nRow - 1;
             [ tempBot.particles ] = getRobotParticles( t.t(tempCount), ...
                 s0(nRow,1), s0(nRow,2), spectra, tempBot.particles, tempCount );
-            [ tempBot ] = mpcMoveRobotX( t.dt, tempBot, spectra, tempCount, u1x(nRow) );
+            [ tempBot ] = mpcMoveRobotX( t.dt, tempBot, spectra, tempCount, u1x );
             s1(nRow+1,1) = tempBot.state.px;
             [ J1(nRow,1) ] = getCost( tempBot.DC.px, s1(nRow+1,1) );
-            [ deltaX ] = getJacobian( J0(nRow,1), J1(nRow,1), u0x(nRow), u1x(nRow) );
-            u0x(nRow) = u1x(nRow);
+            [ deltaX ] = getJacobian( J0(nRow,1), J1(nRow,1), u0x, u1x );
+            u0x = u1x;
             s0(nRow,1) = s1(nRow,1);
             J0(nRow,1) = J1(nRow,1);
             checkX = abs(deltaX(:));
             if checkX(:) <= resolution
                 disp( ' KICK OUTTA X' );
-                u1(nRow,1) = u1x(nRow);
+                u1(nRow,1) = u1x;
                 break
             else
                 delta(nRow,1) = deltaX;
@@ -174,10 +131,12 @@ while nTry ~= decision && nRow ~= 3%tSteps + 1 %or decision criteria
     end
     nTry = nTry + 1;
     if checkX && checkZ && nRow ~= tSteps
-        nRow = nRow + 1
-        u0
-        u1
-        delta
+        nRow = nRow + 1;
+        J1 = vertcat( J1, [0,0] );
+        u1 = vertcat( u1, [0,0] );
+        %u0
+        %u1
+        %delta
     elseif checkX && checkZ && nRow == tSteps
         break
     else
@@ -185,6 +144,7 @@ while nTry ~= decision && nRow ~= 3%tSteps + 1 %or decision criteria
         continue
     end
 end
+
 fprintf(num2str(nTry));
 fprintf('     & ');
 disp(k);

@@ -11,13 +11,13 @@ warning('off', 'MATLAB:odearguments:InconsistentDataType')
 
 [ time ] = loadTimeParameters( );
 t = time.t;
-IC = [0, -20, 0, 0, 0, 0]; %all initial conditions, pos, vel, acc (x and z)
-DC = [0, -20, 0, 0, 0, 0]; %all desired conditions, pos, vel, acc (x and z)
+IC = [0, -15, 0, 0, 0, 0]; %all initial conditions, pos, vel, acc (x and z)
+DC = [0, -15, 0, 0, 0, 0]; %all desired conditions, pos, vel, acc (x and z)
 
 [ waves ] = loadTempWaves( );
 waves.swl = zeros(1, numel(time.t)); %still water line
 [ seaParticles, waves ] = getSeaStateParticles( time.t, IC(1), IC(2), waves );
-
+%figure; plot(t, waves.eta); xlabel('time, s'); ylabel('elevation, m');
 [ volturnus ] = loadSeaBotix( time.t, IC, DC, seaParticles );
 
 counter = 1; 
@@ -26,7 +26,7 @@ U = [ IC(1), IC(2), seaParticles.vx(1), seaParticles.vz(1), seaParticles.ax(1), 
 
 oldInput = zeros( (time.tSteps-1), 2 ) + NaN;
 
-while counter ~= 2%numel(time.t)-time.tSteps %&& counter < numel(time.t)-time.tSteps
+while counter ~= numel(time.t)-time.tSteps %&& counter < numel(time.t)-time.tSteps
     tic
     [ input, time.tCalc ] = getForecast( time, volturnus, waves, counter, oldInput );
     [ volturnus ] = mpcMoveRobot( time.dt, volturnus, waves, counter, input(1,:) );
@@ -53,3 +53,5 @@ subplot(2,1,2)
 plot( t(1:numel(t)-20), temp2(2,1:numel(t)-20), 'b' );
 line( [t(1),t(numel(t)-20)], [0,0],'LineWidth', 1, 'Color', 'r' );
 title('Position Error, z');
+
+figure; plot(t, waves.eta); xlabel('time, s'); ylabel('elevation, m');
