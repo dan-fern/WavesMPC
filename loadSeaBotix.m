@@ -21,7 +21,9 @@ robot.aA = degtorad(45);        %Aft Thruster Angle
 robot.vA = degtorad(20);        %vertical Thruster Angle
 robot.Tmax = 30;                %max thrust per motor
 robot.mDry = 22;                %dry mass in kg in air
-[ robot.mAdx, robot.mAdz ] = loadAddedMass( IC(2) ); %added mass for x/z
+%[ robot.mAdx, robot.mAdz ] = loadAddedMass( IC(2) ); %added mass for x/z
+robot.mAdx = 8.1;
+robot.mAdz = 36.7;
 
 robot.errors.pErrorX = robot.DC.px - robot.state.px;
 robot.errors.pErrorZ = robot.DC.pz - robot.state.pz;

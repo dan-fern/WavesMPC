@@ -28,24 +28,28 @@ U = [ IC(1), IC(2), seaParticles.vx(1), seaParticles.vz(1), seaParticles.ax(1), 
 [ volturnus.particlePlots ] = updatePlotHistory( U, volturnus.particlePlots, counter, 0 );
 wavesOff = numel(time.t) - 180;
 %wavesOff = 1;
-controllerOn = 2;%numel(time.t) - 149;
+controllerOn = 5000;%numel(time.t) - 149;
 while counter ~= numel(time.t)
     if counter == controllerOn
         while counter ~= numel(time.t)
-            [ waves ] = killWaves( time.t, waves, counter, wavesOff );
+            %[ waves ] = killWaves( time.t, waves, counter, wavesOff );
             [ volturnus ] = pidMoveRobot( time.t, volturnus, waves, counter );
             counter = counter + 1;
         end
         pErrorX = volturnus.errors.pErrorX;
         pErrorZ = volturnus.errors.pErrorZ;
         [ volturnus ] = updateErrors( volturnus, counter, pErrorX, pErrorZ );
+        volturnus.errors.tErrorX = sum( abs( volturnus.errorPlots.pErrorX(1:counter-1) ) );
+        volturnus.errors.tErrorZ = sum( abs( volturnus.errorPlots.pErrorZ(1:counter-1) ) );
         break
     else
-        [ waves ] = killWaves( time.t, waves, counter, wavesOff );
-        %[ volturnus ] = driftMoveRobot( time.t, volturnus, waves, counter );
+        %[ waves ] = killWaves( time.t, waves, counter, wavesOff );
+        [ volturnus ] = driftMoveRobot( time.t, volturnus, waves, counter );
         counter = counter + 1;
     end
 end
+volturnus.errors.tErrorX = sum( abs( volturnus.errorPlots.pErrorX(1:counter-1) ) );
+volturnus.errors.tErrorZ = sum( abs( volturnus.errorPlots.pErrorZ(1:counter-1) ) );        
 clear counter U pErrorX pErrorZ
 
 toc
@@ -63,16 +67,16 @@ legend('robot velocity', 'particle velocity')
 subplot(2,1,2)
 plot(time.t, temp1(3,:),'r'); hold on; plot(time.t, temp1(4,:),'b');
 legend('robot velocity', 'particle velocity')
-
+%%
 temp2 = [ volturnus.errorPlots.pErrorX; volturnus.errorPlots.pErrorZ ]; 
 figure('units','normalized','outerposition',[0 0 1 1]);
 subplot(2,1,1)
-plot( time.t(controllerOn-1:end), temp2(1,controllerOn-1:end), 'b' ); 
-line( [time.t(controllerOn-1),time.t(end)], [0,0],'LineWidth', 1, 'Color', 'r' );
+plot( time.t(controllerOn:end), temp2(1,controllerOn:end), 'b' ); 
+line( [time.t(controllerOn),time.t(end)], [0,0],'LineWidth', 1, 'Color', 'r' );
 title('Position Error, x');
 subplot(2,1,2)
-plot( time.t(controllerOn-1:end), temp2(2,controllerOn-1:end), 'b' );
-line( [time.t(controllerOn-1),time.t(end)], [0,0],'LineWidth', 1, 'Color', 'r' );
+plot( time.t(controllerOn:end), temp2(2,controllerOn:end), 'b' );
+line( [time.t(controllerOn),time.t(end)], [0,0],'LineWidth', 1, 'Color', 'r' );
 title('Position Error, z');
 
 clear temp1 temp2
