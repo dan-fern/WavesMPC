@@ -26,7 +26,7 @@ for i = 1:numel(T)
     spectra.eta = spectra.eta + H(i) / 2 * cos(k(i)*x - w(i)*t + E(i));
     if d / L(i) > 0.5
         %deep
-        if d < L(i) / 2
+        %if d < L(i) / 2
             vx = vx - H(i) * w(i) / 2 * exp(k(i)*z) ...
                 * cos(k(i)*x - w(i)*t + E(i));
             vz = vz + H(i) * w(i) / 2 * exp(k(i)*z) ...
@@ -35,9 +35,9 @@ for i = 1:numel(T)
                 * sin(k(i)*x - w(i)*t + E(i));
             az = az + -2 * H(i) * (w(i)/2)^2 * exp(k(i)*z) ...
                 * cos(k(i)*x - w(i)*t + E(i));
-        else
-            continue;
-        end
+        %else
+            %continue;
+        %end
     elseif d / L(i) < 0.05
         %shallow
         if d < L(i) / 2
