@@ -3,7 +3,7 @@ function [ robot ] = pidMoveRobot( t, robot, spectra, count )
 dt = t(2) - t(1);
 x = robot.state.px; z = robot.state.pz; 
 
-KpX = 0.35; KpZ = 0.3; 
+KpX = 0.35*4; KpZ = 0.3*6; 
 KiX = 0.0; KiZ = 0.0;
 KdX = 2.7; KdZ = 3.2; 
 
@@ -22,8 +22,10 @@ gainsX( gainsX <= -1) = -1;
 gainsZ( gainsZ >=  1) =  1;
 gainsZ( gainsZ <= -1) = -1;
 
-motorInputX = gainsX; robot.uX = motorInputX;
-motorInputZ = gainsZ; robot.uZ = motorInputZ;
+motorInputX = gainsX; robot.uX = motorInputX; 
+robot.robotPlots.uX(count) = robot.uX;
+motorInputZ = gainsZ; robot.uZ = motorInputZ; 
+robot.robotPlots.uZ(count) = robot.uZ;
 
 rho = spectra.rho;
 

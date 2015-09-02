@@ -28,7 +28,7 @@ U = [ IC(1), IC(2), seaParticles.vx(1), seaParticles.vz(1), seaParticles.ax(1), 
 [ volturnus.particlePlots ] = updatePlotHistory( U, volturnus.particlePlots, counter, 0 );
 wavesOff = numel(time.t) - 180;
 %wavesOff = 1;
-controllerOn = 5000;%numel(time.t) - 149;
+controllerOn = 1;%numel(time.t) - 149;
 while counter ~= numel(time.t)
     if counter == controllerOn
         while counter ~= numel(time.t)

@@ -1,0 +1,184 @@
+\begin{thebibliography}{10}
+\providecommand{\url}[1]{#1}
+\csname url@rmstyle\endcsname
+\providecommand{\newblock}{\relax}
+\providecommand{\bibinfo}[2]{#2}
+\providecommand\BIBentrySTDinterwordspacing{\spaceskip=0pt\relax}
+\providecommand\BIBentryALTinterwordstretchfactor{4}
+\providecommand\BIBentryALTinterwordspacing{\spaceskip=\fontdimen2\font plus
+\BIBentryALTinterwordstretchfactor\fontdimen3\font minus
+  \fontdimen4\font\relax}
+\providecommand\BIBforeignlanguage[2]{{%
+\expandafter\ifx\csname l@#1\endcsname\relax
+\typeout{** WARNING: IEEEtran.bst: No hyphenation pattern has been}%
+\typeout{** loaded for the language `#1'. Using the pattern for}%
+\typeout{** the default language instead.}%
+\else
+\language=\csname l@#1\endcsname
+\fi
+#2}}
+
+\bibitem{phillips}
+O.~Phillips, \emph{The Dynamics of the Upper Ocean}.\hskip 1em plus 0.5em minus
+  0.4em\relax Cambridge University Press, 1977.
+
+\bibitem{D&D}
+R.~Dean and R.~Dalrymple, \emph{Water Wave Mechanics for Scientists and
+  Engineers}, ser. Advanced Series on Ocean Engineering.\hskip 1em plus 0.5em
+  minus 0.4em\relax World Scientific, 1991, vol.~2.
+
+\bibitem{kim}
+A.~Kim and R.~M. Eustice, ``Active visual {SLAM} for robotic area coverage:
+  Theory and experiment,'' \emph{The International Journal of Robotics
+  Research}, vol.~34, no. 4-5, pp. 457--475, 2015.
+
+\bibitem{chaves}
+S.~Chaves, A.~Kim, and R.~Eustice, ``Opportunistic sampling-based planning for
+  active visual {SLAM},'' in \emph{IEEE/RSJ International Conference on
+  Intelligent Robots and Systems (IROS), 2014}, Sept 2014, pp. 3073--3080.
+
+\bibitem{smithtracking}
+R.~N. Smith, Y.~Chao, B.~H. Jones, D.~A. Caron, P.~P. Li, and G.~S. Sukhatme,
+  ``\BIBforeignlanguage{English}{Trajectory design for autonomous underwater
+  vehicles based on ocean model predictions for feature tracking},'' in
+  \emph{\BIBforeignlanguage{English}{Field and Service Robotics}}, ser.
+  Springer Tracts in Advanced Robotics, A.~Howard, K.~Iagnemma, and A.~Kelly,
+  Eds.\hskip 1em plus 0.5em minus 0.4em\relax Springer Berlin Heidelberg, 2010,
+  vol.~62, pp. 263--273.
+
+\bibitem{smithfront}
+R.~Smith, P.~Cooksey, F.~Py, G.~Sukhatme, and K.~Rajan, ``Adaptive path
+  planning for tracking ocean fronts with an autonomous underwater vehicle,''
+  in \emph{Proceedings, International Symposium on Experimental Robotics},
+  Morocco, Jun 2014.
+
+\bibitem{petres}
+C.~Pêtrès, Y.~Pailhas, P.~Patrón, Y.~Petillot, J.~Evans, and D.~Lane, ``Path
+  planning for autonomous underwater vehicles,'' \emph{IEEE Transactions on
+  Robotics}, vol.~23, no.~2, pp. 331--341, April 2007.
+
+\bibitem{medagodaADCP}
+L.~Medagoda, J.~Kinsey, and M.~Eilders, ``Autonomous underwater vehicle
+  localization in a spatiotemporally varying water current field,'' in
+  \emph{IEEE International Conference on Robotics and Automation (ICRA), 2015},
+  May 2015, pp. 2091--2098.
+
+\bibitem{joslin}
+J.~Joslin, E.~Celkis, C.~Roper, A.~Stewart, and B.~Polagye, ``Development of an
+  adaptable monitoring package for marine renewable energy,'' in \emph{Oceans -
+  San Diego, 2013}, Sept 2013, pp. 1--10.
+
+\bibitem{brekken1}
+T.~Brekken, ``On model predictive control for a point absorber wave energy
+  converter,'' in \emph{PowerTech, 2011 IEEE Trondheim}, June 2011, pp. 1--8.
+
+\bibitem{brekken2}
+M.~Richter, M.~Magana, O.~Sawodny, and T.~Brekken, ``Nonlinear model predictive
+  control of a point absorber wave energy converter,'' \emph{Sustainable
+  Energy, IEEE Transactions on}, vol.~4, no.~1, pp. 118--126, Jan 2013.
+
+\bibitem{ling}
+B.~Ling and B.~Batten, ``Real time estimation and prediction of wave excitation
+  forces on a heaving body,'' in \emph{ASME International Conference on Ocean,
+  Offshore and Arctic Engineering (OMAE), 2015}, May 2015.
+
+\bibitem{colby}
+M.~Colby, E.~Nasroullahi, and K.~Tumer, ``Optimizing ballast design of wave
+  energy converters using evolutionary algorithms,'' in \emph{Proceedings of
+  the 13th annual conference on Genetic and evolutionary computation}.\hskip
+  1em plus 0.5em minus 0.4em\relax ACM, 2011, pp. 1739--1746.
+
+\bibitem{huynh}
+V.~Huynh, M.~Dunbabin, and R.~Smith, ``Predictive motion planning for {AUV}s
+  subject to strong time-varying currents and forecasting uncertainties,'' in
+  \emph{IEEE International Conference on Robotics and Automation (ICRA), 2015},
+  2015.
+
+\bibitem{medagodaMPC}
+L.~Medagoda and S.~Williams, ``Model predictive control of an autonomous
+  underwater vehicle in an in situ estimated water current profile,'' in
+  \emph{OCEANS, 2012 - Yeosu}, May 2012, pp. 1--8.
+
+\bibitem{riedel1}
+J.~Riedel and A.~Healey, ``Shallow water station keeping of {AUV}s using
+  multi-sensor fusion for wave disturbance prediction and compensation,'' in
+  \emph{OCEANS '98 Conference Proceedings}, vol.~2, Sep 1998, pp. 1064--1068
+  vol.2.
+
+\bibitem{riedel2}
+J.~Riedel, ``Shallow water stationkeeping of an autonomous underwater vehicle:
+  the experimental results of a disturbance compensation controller,'' in
+  \emph{OCEANS 2000 MTS/IEEE Conference and Exhibition}, vol.~2, 2000, pp.
+  1017--1028.
+
+\bibitem{camacho}
+E.~Camacho and C.~Bordons, \emph{Model Predictive Control}, ser. Advanced
+  Textbooks in Control and Signal Processing.\hskip 1em plus 0.5em minus
+  0.4em\relax Springer International Publishing, 2013.
+
+\bibitem{rawlings}
+J.~Rawlings and D.~Mayne, \emph{Model Predictive Control: Theory and
+  Design}.\hskip 1em plus 0.5em minus 0.4em\relax Nob Hill, 2009.
+
+\bibitem{lavalle}
+S.~LaValle, \emph{Planning Algorithms}.\hskip 1em plus 0.5em minus 0.4em\relax
+  Cambridge University Press, 2006.
+
+\bibitem{binney}
+J.~Binney, A.~Krause, and G.~Sukhatme, ``Informative path planning for an
+  autonomous underwater vehicle,'' in \emph{IEEE International Conference on
+  Robotics and Automation (ICRA), 2010}, May 2010, pp. 4791--4796.
+
+\bibitem{bosma}
+B.~Bosma, T.~Brekken, H.~Ozkan-Haller, and S.~Yim, ``Wave energy converter
+  modeling in the time domain: A design guide,'' in \emph{Technologies for
+  Sustainability (SusTech), 2013 1st IEEE Conference on}, Aug 2013, pp.
+  103--108.
+
+\bibitem{goda}
+Y.~G{\=o}da, \emph{Random Seas and Design of Maritime Structures}, ser.
+  Advanced Series on Ocean Engineering.\hskip 1em plus 0.5em minus 0.4em\relax
+  World Scientific, 2010, vol.~33.
+
+\bibitem{falnes}
+J.~Falnes, \emph{Ocean Waves and Oscillating Systems: Linear Interactions
+  including Wave-Energy Extraction}.\hskip 1em plus 0.5em minus 0.4em\relax
+  Cambridge University Press, 2002.
+
+\bibitem{ROV}
+R.~Christ and R.~Wernli~Sr, \emph{The ROV Manual: A User Guide for Remotely
+  Operated Vehicles}.\hskip 1em plus 0.5em minus 0.4em\relax
+  Butterworth-Heinemann, 2013.
+
+\bibitem{solidworks}
+U.~G. SolidWorks, ``Dassault systemes solidworks corp,'' \emph{Concord,
+  Massachusetts}, 2012.
+
+\bibitem{aqwa}
+A.~ANSYS, ``User’s manual (ver. 14.0),'' \emph{ANSYS Incorporated,
+  Canonsburg, PA}, 2012.
+
+\bibitem{ode45}
+J.~Dormand and P.~Prince, ``A family of embedded {Runge-Kutta} formulae,''
+  \emph{Journal of Computational and Applied Mathematics}, vol.~6, no.~1, pp.
+  19--26, 1980.
+
+\bibitem{geoffadapt}
+G.~Hollinger, B.~Englot, F.~Hover, U.~Mitra, and G.~Sukhatme, ``Active planning
+  for underwater inspection and the benefit of adaptivity,'' vol.~32, no.~1,
+  pp. 3--18, 2013.
+
+\bibitem{geoffuncertainty}
+G.~Hollinger, B.~Englot, F.~Hover, U.~Mitra, and G.~S. Sukhatme,
+  ``Uncertainty-driven view planning for underwater inspection,'' in
+  \emph{Robotics and Automation (ICRA), 2012 IEEE International Conference on},
+  May 2012, pp. 4884--4891.
+
+\bibitem{ballard}
+R.~Ballard, L.~Stager, D.~Master, D.~Yoerger, D.~Mindell, L.~Whitcomb,
+  H.~Singh, and D.~Piechota, ``\BIBforeignlanguage{English}{Iron age shipwrecks
+  in deep water off ashkelon, israel},''
+  \emph{\BIBforeignlanguage{English}{American Journal of Archaeology}}, vol.
+  106, no.~2, pp. 151--168, 2002.
+
+\end{thebibliography}

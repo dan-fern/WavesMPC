@@ -30,6 +30,8 @@ while counter ~= numel(time.t)-time.tSteps %&& counter < numel(time.t)-time.tSte
     tic
     [ input, time.tCalc ] = getForecast( time, volturnus, waves, counter, oldInput );
     [ volturnus ] = mpcMoveRobot( time.dt, volturnus, waves, counter, input(1,:) );
+    volturnus.robotPlots.uX(counter) = input(1,1);
+    volturnus.robotPlots.uZ(counter) = input(1,2);
     oldInput = input(2:end,:);
     counter = counter + 1;
 end

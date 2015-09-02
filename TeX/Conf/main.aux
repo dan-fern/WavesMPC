@@ -1,0 +1,138 @@
+\relax 
+\citation{phillips}
+\citation{D&D}
+\citation{kim}
+\citation{chaves}
+\citation{smithtracking}
+\citation{smithfront}
+\citation{petres}
+\citation{medagodaADCP}
+\select@language{english}
+\@writefile{toc}{\select@language{english}}
+\@writefile{lof}{\select@language{english}}
+\@writefile{lot}{\select@language{english}}
+\@writefile{toc}{\contentsline {section}{\numberline {\textlatin  {I}}Introduction}{1}}
+\newlabel{sec:introduction}{{\textlatin  {I}}{1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces A visualization of the flow field velocity at various depths beneath a monochromatic wave. These vector lengths are not to scale and are intended to conceptualize the direction and decay with depth of wave forces.}}{1}}
+\newlabel{fig:flowFig}{{1}{1}}
+\citation{joslin}
+\citation{brekken1}
+\citation{brekken2}
+\citation{ling}
+\citation{colby}
+\citation{huynh}
+\citation{medagodaMPC}
+\citation{riedel1}
+\citation{riedel2}
+\citation{camacho}
+\citation{rawlings}
+\citation{lavalle}
+\citation{binney}
+\citation{medagodaMPC}
+\citation{phillips}
+\citation{D&D}
+\citation{bosma}
+\citation{D&D}
+\@writefile{toc}{\contentsline {section}{\numberline {\textlatin  {II}}Related Work}{2}}
+\newlabel{sec:related}{{\textlatin  {II}}{2}}
+\@writefile{toc}{\contentsline {section}{\numberline {\textlatin  {III}}Model Predictive Control}{2}}
+\newlabel{sec:mpc}{{\textlatin  {III}}{2}}
+\newlabel{eqn:cost}{{1}{2}}
+\newlabel{eqn:argmin}{{2}{2}}
+\@writefile{toc}{\contentsline {section}{\numberline {\textlatin  {IV}}Wave Mechanics}{2}}
+\newlabel{sec:waves}{{\textlatin  {IV}}{2}}
+\citation{goda}
+\citation{falnes}
+\citation{D&D}
+\citation{D&D}
+\citation{D&D}
+\citation{ROV}
+\citation{solidworks}
+\citation{aqwa}
+\newlabel{eqn:eta}{{3}{3}}
+\@writefile{toc}{\contentsline {section}{\numberline {\textlatin  {V}}System Dynamics}{3}}
+\newlabel{sec:dynamics}{{\textlatin  {V}}{3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\textlatin  {V}-A}Vehicle Model}{3}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces A SeaBotix vLBV300 ROV similar to the one modeled in this work. Along with IMU and DVL sensors, the vehicle has six angled thrusters which control it along five degrees of freedom: heave (vertical $z$), sway (lateral $y$), surge (lateral $x$), roll (rotation around $x$), and yaw (rotation around $z$).}}{3}}
+\newlabel{fig:seabotix}{{2}{3}}
+\@writefile{lot}{\contentsline {table}{\numberline {\textlatin  {I}}{\ignorespaces Vehicle parameters used in simulation}}{3}}
+\newlabel{table:vehicleData}{{\textlatin  {I}}{3}}
+\newlabel{eqn:forceBal1}{{4}{3}}
+\citation{ode45}
+\citation{ling}
+\newlabel{eqn:forceBal2}{{5}{4}}
+\newlabel{eqn:forceBal3}{{6}{4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\textlatin  {V}-B}State Space Form}{4}}
+\newlabel{eqn:SS_all}{{7}{4}}
+\newlabel{eqn:SS_A}{{8}{4}}
+\newlabel{eqn:SS_B}{{9}{4}}
+\newlabel{eqn:SS_D}{{10}{4}}
+\@writefile{toc}{\contentsline {section}{\numberline {\textlatin  {VI}}Simulator Setup}{4}}
+\newlabel{sec:sim}{{\textlatin  {VI}}{4}}
+\@writefile{lot}{\contentsline {table}{\numberline {\textlatin  {II}}{\ignorespaces Wave field parameters used in simulation}}{4}}
+\newlabel{table:waveData}{{\textlatin  {II}}{4}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces A time series of the wave profile over the 240~s simulated time window constructed using the parameters listed in Table \ref  {table:waveData}.}}{4}}
+\newlabel{fig:eta}{{3}{4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\textlatin  {VI}-A}Wave Field Model}{4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\textlatin  {VI}-B}Algorithm Layout}{4}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces caption}}{5}}
+\newlabel{alg:MPC}{{1}{5}}
+\@writefile{toc}{\contentsline {section}{\numberline {\textlatin  {VII}}Results}{5}}
+\newlabel{sec:results}{{\textlatin  {VII}}{5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\textlatin  {VII}-A}Determination of Prediction Horizon}{5}}
+\newlabel{results:bestHorizon}{{\textlatin  {VII}-A}{5}}
+\@writefile{lot}{\contentsline {table}{\numberline {\textlatin  {III}}{\ignorespaces Performance of various simulated horizons}}{5}}
+\newlabel{table:bestHorizon}{{\textlatin  {III}}{5}}
+\citation{D&D}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Position error time series in global $\mathbf  {x}$ and $\mathbf  {z}$ coordinates when comparing a traditional feedback controller with a model predictive controller. As shown, MPC returns error values \unit  [74]{\%s} lower than PD Control. RMS error values for these results are shown in Fig~\ref  {fig:errorsBar}.}}{6}}
+\newlabel{fig:errorComp}{{4}{6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\textlatin  {VII}-B}MPC Performance}{6}}
+\newlabel{results:perform}{{\textlatin  {VII}-B}{6}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces RMS errors for the three cases in Section \ref  {results:perform}. The MPC robot showed a \unit  [74]{\%} reduction in error compared to another using PD control.}}{6}}
+\newlabel{fig:errorsBar}{{5}{6}}
+\citation{goda}
+\citation{geoffadapt}
+\citation{geoffuncertainty}
+\citation{ballard}
+\bibdata{main}
+\bibcite{phillips}{1}
+\bibcite{D&D}{2}
+\bibcite{kim}{3}
+\bibcite{chaves}{4}
+\bibcite{smithtracking}{5}
+\bibcite{smithfront}{6}
+\bibcite{petres}{7}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces MPC thruster inputs in global $\mathbf  {x}$ and $\mathbf  {z}$ coordinates over the simulated time series. The controller does not issue commands that saturate the thrusters for prolonged periods; however, it is prone to frequent direction changes.}}{7}}
+\newlabel{fig:thrusts}{{6}{7}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\textlatin  {VII}-C}Sensor Noise Impact}{7}}
+\newlabel{results:noise}{{\textlatin  {VII}-C}{7}}
+\@writefile{lot}{\contentsline {table}{\numberline {\textlatin  {IV}}{\ignorespaces Performance of MPC with noisy wave observations}}{7}}
+\newlabel{table:noiseData}{{\textlatin  {IV}}{7}}
+\@writefile{toc}{\contentsline {section}{\numberline {\textlatin  {VIII}}Conclusions and Future Work}{7}}
+\newlabel{sec:conclusion}{{\textlatin  {VIII}}{7}}
+\@writefile{toc}{\contentsline {section}{References}{7}}
+\bibcite{medagodaADCP}{8}
+\bibcite{joslin}{9}
+\bibcite{brekken1}{10}
+\bibcite{brekken2}{11}
+\bibcite{ling}{12}
+\bibcite{colby}{13}
+\bibcite{huynh}{14}
+\bibcite{medagodaMPC}{15}
+\bibcite{riedel1}{16}
+\bibcite{riedel2}{17}
+\bibcite{camacho}{18}
+\bibcite{rawlings}{19}
+\bibcite{lavalle}{20}
+\bibcite{binney}{21}
+\bibcite{bosma}{22}
+\bibcite{goda}{23}
+\bibcite{falnes}{24}
+\bibcite{ROV}{25}
+\bibcite{solidworks}{26}
+\bibcite{aqwa}{27}
+\bibcite{ode45}{28}
+\bibcite{geoffadapt}{29}
+\bibcite{geoffuncertainty}{30}
+\bibcite{ballard}{31}
+\bibstyle{IEEEtran}

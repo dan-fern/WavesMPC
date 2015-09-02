@@ -51,6 +51,9 @@ robot.errorPlots.pErrorZ = zeros(1,numel(t)) + robot.errors.pErrorZ;
 robot.errorPlots.iErrorX = zeros(1,numel(t)) + robot.errors.iErrorX;
 robot.errorPlots.iErrorZ = zeros(1,numel(t)) + robot.errors.iErrorZ;
 
+robot.robotPlots.uX = zeros(1,numel(t));
+robot.robotPlots.uZ = zeros(1,numel(t));
+
 return 
 
 end

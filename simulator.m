@@ -13,6 +13,11 @@ else
     yLimit = eta(eta==max(eta)) + 0.5;
 end
 
+writerObj = VideoWriter('PD');
+writerObj.FrameRate = 5;
+writerObj.Quality = 100;
+open(writerObj);
+
 figure('units','normalized','outerposition',[0 0 1 1]);
 
 for i = 1:numel(t)-9
@@ -80,8 +85,9 @@ for i = 1:numel(t)-9
         pause(.05);
     end
     hold off;
+    writeVideo(writerObj,getframe(gcf));
 end
-
+close(writerObj);
 return
 
 end

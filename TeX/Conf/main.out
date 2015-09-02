@@ -1,0 +1,17 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Model Predictive Control}{}% 2
+\BOOKMARK [1][-]{section.3}{Wave Mechanics}{}% 3
+\BOOKMARK [1][-]{section.4}{System Dynamics}{}% 4
+\BOOKMARK [2][-]{subsection.4.1}{Vehicle Model}{section.4}% 5
+\BOOKMARK [2][-]{subsection.4.2}{Force Balance}{section.4}% 6
+\BOOKMARK [2][-]{subsection.4.3}{State Space}{section.4}% 7
+\BOOKMARK [1][-]{section.5}{Simulator Structure}{}% 8
+\BOOKMARK [2][-]{subsection.5.1}{Wave Field Model}{section.5}% 9
+\BOOKMARK [2][-]{subsection.5.2}{Algorithm Layout}{section.5}% 10
+\BOOKMARK [1][-]{section.6}{Results}{}% 11
+\BOOKMARK [2][-]{subsection.6.1}{Determination of Best Horizon}{section.6}% 12
+\BOOKMARK [2][-]{subsection.6.2}{MPC comapred with PD, and drift}{section.6}% 13
+\BOOKMARK [2][-]{subsection.6.3}{Optimal Horizon against noisy world}{section.6}% 14
+\BOOKMARK [2][-]{subsection.6.4}{Future Work}{section.6}% 15
+\BOOKMARK [1][-]{section.7}{Conclusion}{}% 16
+\BOOKMARK [1][-]{section*.2}{References}{}% 17

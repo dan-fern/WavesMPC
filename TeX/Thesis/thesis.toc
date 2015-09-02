@@ -1,0 +1,26 @@
+\select@language {english}
+\contentsline {chapter}{\numberline {1}Introduction}{1}
+\contentsline {chapter}{\numberline {2}Background}{4}
+\contentsline {section}{\numberline {2.1}Wave Energy}{4}
+\contentsline {section}{\numberline {2.2}Wave Forces in the Water Column}{5}
+\contentsline {section}{\numberline {2.3}Wave Prediction Models}{5}
+\contentsline {section}{\numberline {2.4}Model Predictive Control}{5}
+\contentsline {section}{\numberline {2.5}Underwater Robotics}{6}
+\contentsline {subsection}{\numberline {2.5.1}Path Planning}{7}
+\contentsline {subsection}{\numberline {2.5.2}Localization}{10}
+\contentsline {subsection}{\numberline {2.5.3}Perception}{12}
+\contentsline {subsection}{\numberline {2.5.4}Combined Systems}{15}
+\select@language {polutonikogreek}
+\select@language {english}
+\contentsline {chapter}{\numberline {3}Method}{20}
+\contentsline {section}{\numberline {3.1}Wave Field Model}{20}
+\contentsline {section}{\numberline {3.2}System Model}{21}
+\contentsline {section}{\numberline {3.3}Model Predictive Controller, or just Controller}{21}
+\contentsline {chapter}{\numberline {4}Results}{22}
+\contentsline {section}{\numberline {4.1}Controller Validation}{22}
+\contentsline {section}{\numberline {4.2}On determining best horizon}{22}
+\contentsline {section}{\numberline {4.3}with Gaussian Noise attached}{22}
+\contentsline {section}{\numberline {4.4}Future Work}{22}
+\contentsline {chapter}{\numberline {5}Conclusion}{26}
+\contentsline {chapter}{Bibliography}{27}
+\contentsline {chapter}{Appendices}{28}
