@@ -19,7 +19,7 @@ waves = loadTempWaves( );
 waves.swl = zeros(1, numel(time.t)); %still water line
 
 [ seaParticles, waves ] = getSeaStateParticles( time.t, IC(1), IC(2), waves );
-%figure; plot(t, waves.eta); xlabel('time, s'); ylabel('elevation, m');
+
 volturnus = loadSeaBotix( time.t, IC, DC, seaParticles );
 %[ dragForces ] = getDragForces( t, seaParticles, volturnus, waves.rho );
 
@@ -39,8 +39,6 @@ while counter ~= numel(time.t)
         pErrorX = volturnus.errors.pErrorX;
         pErrorZ = volturnus.errors.pErrorZ;
         [ volturnus ] = updateErrors( volturnus, counter, pErrorX, pErrorZ );
-        volturnus.errors.tErrorX = sum( abs( volturnus.errorPlots.pErrorX(1:counter-1) ) );
-        volturnus.errors.tErrorZ = sum( abs( volturnus.errorPlots.pErrorZ(1:counter-1) ) );
         break
     else
         %[ waves ] = killWaves( time.t, waves, counter, wavesOff );
@@ -48,13 +46,13 @@ while counter ~= numel(time.t)
         counter = counter + 1;
     end
 end
-volturnus.errors.tErrorX = sum( abs( volturnus.errorPlots.pErrorX(1:counter-1) ) );
-volturnus.errors.tErrorZ = sum( abs( volturnus.errorPlots.pErrorZ(1:counter-1) ) );        
+     
 clear counter U pErrorX pErrorZ
 
 toc
 %%
-simulator( time.t, waves.eta, waves.d, DC, volturnus.robotPlots );
+%simulator( time.t, waves.eta, waves.d, DC, volturnus.robotPlots );
+simVid( time.t, waves.eta, waves.d, DC, volturnus.robotPlots, 'PD' );
 
 
 temp1 = [ volturnus.robotPlots.vx; volturnus.particlePlots.vx; ];
