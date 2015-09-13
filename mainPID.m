@@ -28,11 +28,11 @@ U = [ IC(1), IC(2), seaParticles.vx(1), seaParticles.vz(1), seaParticles.ax(1), 
 [ volturnus.particlePlots ] = updatePlotHistory( U, volturnus.particlePlots, counter, 0 );
 wavesOff = numel(time.t) - 180;
 %wavesOff = 1;
-controllerOn = 1;%numel(time.t) - 149;
+controllerOn = numel(time.t) - 149;
 while counter ~= numel(time.t)
     if counter == controllerOn
         while counter ~= numel(time.t)
-            %[ waves ] = killWaves( time.t, waves, counter, wavesOff );
+            [ waves ] = killWaves( time.t, waves, counter, wavesOff );
             [ volturnus ] = pidMoveRobot( time.t, volturnus, waves, counter );
             counter = counter + 1;
         end
@@ -41,7 +41,7 @@ while counter ~= numel(time.t)
         [ volturnus ] = updateErrors( volturnus, counter, pErrorX, pErrorZ );
         break
     else
-        %[ waves ] = killWaves( time.t, waves, counter, wavesOff );
+        [ waves ] = killWaves( time.t, waves, counter, wavesOff );
         [ volturnus ] = driftMoveRobot( time.t, volturnus, waves, counter );
         counter = counter + 1;
     end
@@ -69,13 +69,20 @@ legend('robot velocity', 'particle velocity')
 temp2 = [ volturnus.errorPlots.pErrorX; volturnus.errorPlots.pErrorZ ]; 
 figure('units','normalized','outerposition',[0 0 1 1]);
 subplot(2,1,1)
-plot( time.t(controllerOn:end), temp2(1,controllerOn:end), 'b' ); 
-line( [time.t(controllerOn),time.t(end)], [0,0],'LineWidth', 1, 'Color', 'r' );
-title('Position Error, x');
+plot( time.t(controllerOn-1:125), temp2(1,controllerOn-1:125), 'b','LineWidth', 2 ); 
+line( [time.t(controllerOn-1),time.t(end)], [0,0],'LineWidth', 2, 'Color', 'r' );
+xlim( [time.t(controllerOn-1),time.t(125)] );
+ylabel({'Position Error, x'}, 'FontSize', 20);
+set(gca,'XTickLabel',get(gca,'XTickLabel'),'fontsize',16);
+set(gca,'YTickLabel',get(gca,'YTickLabel'),'fontsize',16);
+title('Feedback (PD) Controller Tuning');
 subplot(2,1,2)
-plot( time.t(controllerOn:end), temp2(2,controllerOn:end), 'b' );
-line( [time.t(controllerOn),time.t(end)], [0,0],'LineWidth', 1, 'Color', 'r' );
-title('Position Error, z');
+plot( time.t(controllerOn-1:125), temp2(2,controllerOn-1:125), 'b','LineWidth', 2 );
+line( [time.t(controllerOn-1),time.t(end)], [0,0],'LineWidth', 2, 'Color', 'r' );
+xlim( [time.t(controllerOn-1),time.t(125)] );
+ylabel('Position Error, z', 'FontSize', 20); xlabel('Time, s');
+set(gca,'XTickLabel',get(gca,'XTickLabel'),'fontsize',16);
+set(gca,'YTickLabel',get(gca,'YTickLabel'),'fontsize',16);
 
 clear temp1 temp2
 
