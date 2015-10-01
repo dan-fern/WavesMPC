@@ -1,3 +1,11 @@
+%%% loadTempWaves.m 
+%%% Daniel Fernández
+%%% May 2015
+%%% Creates a wave field given a set of wave height, H, period, T, and
+%%% phase, E values.  Error checks on number of elements in each set.  d is
+%%% the depth, theta is the wave angle, is 0 in 2D, and rho is the density
+%%% of seawater at 1030 kg/m^3.
+
 function [ spectra ] = loadTempWaves( )
 
 spectra.d = 50;

@@ -1,3 +1,11 @@
+%%% updateErrors.m 
+%%% Daniel Fernández
+%%% July 2015
+%%% Updates all errors in the robot object. pError is positional, dError is
+%%% derivative, iError is integral, tError is total, and RMS is RMS for the
+%%% entire set.
+
+
 function [ robot ] = updateErrors( robot, count, pErrX, pErrZ )
 
 robot.errors.pErrorX = robot.DC.px - robot.state.px;

@@ -1,3 +1,13 @@
+%%% mpcMoveRobot.m 
+%%% Daniel Fernández
+%%% July 2015
+%%% Moves robot along a set of control actions.  This function can be used
+%%% to move the robot or in a forecasting role.  Takes inputs into B matrix
+%%% and passes to DEs called x2dot and z2dot.  Returns new state and
+%%% updates errors and plot data.  Functions similar pidMoveRobot( ),
+%%% except control action is not generated, it is passed in.  
+
+
 function [ robot ] = mpcMoveRobot( dt, robot, spectra, count, input )
 
 input( input >=  1) =  1; 

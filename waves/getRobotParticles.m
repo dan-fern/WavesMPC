@@ -1,8 +1,9 @@
 %%% getRobotParticles.m 
 %%% Daniel Fernández
 %%% June 2015
-%%% takes in sea state and spits out summed particle velocities,
-%%% accelerations and sea state.
+%%% takes in sea state, position, and time; outputs current summed particle 
+%%% velocities and accelerations.  Classifies component waves based on
+%%% deep, intermediate, or shallow criteria.
 
 function [ particles ] = getRobotParticles( t, x, z, spectra, particles, count )
 

@@ -1,3 +1,11 @@
+%%% driftMoveRobot.m 
+%%% Daniel Fernández
+%%% May 2015
+%%% moves the non-actuated robot.  Takes initial position and all relevant
+%%% DE parameters and passes them through DEs called x2dot and z2dot.  Gets
+%%% new state and updates all errors and plotdata.
+
+
 function [ robot ] = driftMoveRobot( t, robot, spectra, count )
 
 dt = t(2) - t(1);
@@ -33,7 +41,7 @@ z2dot = @(tz,z1dot) ...
 
 robot.state.ax = x2dot( tx(end), yx(end) );
 robot.state.az = z2dot( tz(end), yz(end) );
-robot.state.vx = yx(end); 
+robot.state.vx = yx(end)-0.001; 
 robot.state.vz = yz(end);
 robot.state.px = odeDisplacement( robot.state.px, yx, tx );
 robot.state.pz = odeDisplacement( robot.state.pz, yz, tz );

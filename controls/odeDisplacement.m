@@ -1,3 +1,10 @@
+%%% odeDisplacemtn.m 
+%%% Daniel Fernández
+%%% July 2015
+%%% gets displacement for a set of velocity and time vectors.  Used to
+%%% generate more accurate positions with ode45 results.  
+
+
 function [ pos2 ] = odeDisplacement( pos1, v, t ) 
 
 nCalcs = numel(v) - 1;

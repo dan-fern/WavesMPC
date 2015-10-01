@@ -1,4 +1,13 @@
-% dummyPlots
+%%% dummyPlots.m
+%%% Daniel Fernández
+%%% May 2015
+%%% not a standalone script; this is an assortment of charts used to
+%%% illustrate data.  Will require workspaces loaded in, or simulations
+%%% prior.  
+
+%% compares robot velocity with particle velocity
+% I used this to verify that the robot dynamics looked nice, lagging behind
+% the wave form and with a proper transient response.  
 
 temp = [ volturnus.robotPlots.vx; volturnus.particlePlots.vx; ];
 temp = [ temp; volturnus.robotPlots.vz; volturnus.particlePlots.vz; ];
@@ -10,6 +19,10 @@ legend('robot velocity', 'particle velocity')
 subplot(2,1,2)
 plot(t, temp(3,:),'r'); hold on; plot(t, temp(4,:),'b');
 legend('robot velocity', 'particle velocity')
+
+%% plots wave profile and acceleration, velocity, and force vectors
+% I used this to qualitatively make a good looking wave field and to make
+% sure all the signs were right and everything had reasonable magnitudes. 
 
 figure; plot(t, waves.eta); xlabel('time, s'); ylabel('elevation, m');
 
@@ -47,6 +60,11 @@ legend('Accelerations', 'Velocities');
 %find(particles.vz==max(particles.vx))
 
 %% inputChecks
+% This is the chart that showed the thrust over time.  I used this to
+% validate that the thrusters weren't saturated, and that the control
+% actions generated made sense.  Values are multiplied by 100 because they 
+% percent of thrust.
+
 figure('units','normalized','outerposition',[0 0 1 1]);
 set(findobj('color','g'),'Color',[0 0.6 0]);
 subplot(5,1,1)
@@ -81,6 +99,9 @@ set(gca,'YTickLabel',get(gca,'YTickLabel'),'fontsize',16);
 
 
 %% compCharts
+% These are the two error charts.  First is the time series comparing PD
+% and MPC errors.  Second is the bar chart with the drifting robot as
+% reference.
 
 clc
 clear variables
@@ -180,16 +201,20 @@ set(gca,'YTickLabel',get(gca,'YTickLabel'),'fontsize',20);
 title('RMS Error Compared')
 
 
-%% fig1
+%% flow field chart
+% this is the monochromatic wave with the velocity quiver vectors beneath
+% it.  The for loop is to turn it into a video similar to in the defense
+% presentation.  This section is standalone.
 
 clear variables
 close all
 clc
 
+%for k = 1:10
 waves.d = 50;
 waves.T = 8.0107;
 waves.H = 2;
-waves.E = -pi/2;
+waves.E = -pi/2 ;%- k*pi/10;
 waves.theta = 0;
 waves.rho = 1030;
 t = linspace(0,waves.T,21);
@@ -209,12 +234,10 @@ waves.swl = zeros(1, numel(t)); %still water line
 [ z6Particles, waves ] = getSeaStateParticles( t, x, z6, waves );
 [ z8Particles, waves ] = getSeaStateParticles( t, x, z8, waves );
 [ z10Particles, waves ] = getSeaStateParticles( t, x, z10, waves );
-
-
-
 figure('units','normalized','outerposition',[0 0 1 0.6]);
+clf
 hold on;
-plot(xAxis, waves.eta);  
+plot(xAxis, waves.eta);  %hold on;
 plot(xAxis, waves.swl, 'linestyle', '--');
 baseX = [ xAxis(end)+1, xAxis(1)-1 ];
 baseY = [ -15, -15 ];
@@ -238,8 +261,12 @@ set(gca,'XTick',[]);
 ylim([-12,2]); ylabel('Water Depth, m');
 set(gca,'YTickLabel',get(gca,'YTickLabel'),'fontsize',20); 
 title('Flow Velocity Vectors beneath a Monochromatic Wave, L = 100m', 'FontSize', 24);
+pause(0.1);
+%end
 
 %% RMS error for best horizon
+% I used this data to decide my best prediction horizon and get the values
+% for the charts.
 
 clc
 clear variables
@@ -295,12 +322,15 @@ for i = 1:numel(tCalc)
 end
 
 %% buoyData visualized
+% this is one of the wave forms for the buoy data.  It extracts a 4 minute
+% sample at a given row and subset.  This is NOT standalone and needs the
+% buoy data object as reference.
 
 close all
 row = 586;
-setset = 6;
-start = (setset-1) * 480 + 1;
-stop = setset * 480;
+subset = 6;
+start = (subset-1) * 480 + 1;
+stop = subset * 480;
 t=linspace(0.5,240,480);
 figure('units','normalized','outerposition',[0 0 1 0.4]); 
 plot(t, eta(row,start:stop), '-b', 'LineWidth', 2); 
@@ -315,4 +345,54 @@ set(gca,'XTickLabel',get(gca,'XTickLabel'),'fontsize',16);
 set(gca,'YTickLabel',get(gca,'YTickLabel'),'fontsize',16);
 title('AWACS Heave Data for 2 October 2013, 4:00 P.M.')
 
+%% tuning charts
+% This gave me the transient response after calling killWaves( ).  I used
+% this to tune PD gains.
 
+temp2 = [ volturnus.errorPlots.pErrorX; volturnus.errorPlots.pErrorZ ]; 
+figure('units','normalized','outerposition',[0 0 1 1]);
+subplot(2,1,1)
+plot( time.t(controllerOn-1:125), temp2(1,controllerOn-1:125), 'b','LineWidth', 2 ); 
+line( [time.t(controllerOn-1),time.t(end)], [0,0],'LineWidth', 2, 'Color', 'r' );
+xlim( [time.t(controllerOn-1),time.t(125)] );
+ylabel({'Position Error, x'}, 'FontSize', 20);
+set(gca,'XTickLabel',get(gca,'XTickLabel'),'fontsize',16);
+set(gca,'YTickLabel',get(gca,'YTickLabel'),'fontsize',16);
+title('Feedback (PD) Controller Tuning');
+subplot(2,1,2)
+plot( time.t(controllerOn-1:125), temp2(2,controllerOn-1:125), 'b','LineWidth', 2 );
+line( [time.t(controllerOn-1),time.t(end)], [0,0],'LineWidth', 2, 'Color', 'r' );
+xlim( [time.t(controllerOn-1),time.t(125)] );
+ylabel('Position Error, z', 'FontSize', 20); xlabel('Time, s');
+set(gca,'XTickLabel',get(gca,'XTickLabel'),'fontsize',16);
+set(gca,'YTickLabel',get(gca,'YTickLabel'),'fontsize',16);
+
+clear temp1 temp2
+
+%% more error charts
+temp2 = [ volturnus.errorPlots.pErrorX; volturnus.errorPlots.pErrorZ ]; 
+figure('units','normalized','outerposition',[0 0 1 1]);
+subplot(2,1,1)
+plot( t(1:numel(t)-20), temp2(1,1:numel(t)-20), 'b' ); 
+line( [t(1),t(numel(t)-20)], [0,0],'LineWidth', 1, 'Color', 'r' );
+title('Position Error, x');
+subplot(2,1,2)
+plot( t(1:numel(t)-20), temp2(2,1:numel(t)-20), 'b' );
+line( [t(1),t(numel(t)-20)], [0,0],'LineWidth', 1, 'Color', 'r' );
+title('Position Error, z');
+
+%% more wave profiles
+figure; plot(t, waves.eta); xlabel('time, s'); ylabel('elevation, m');
+
+figure('units','normalized','outerposition',[0 0 1 0.4]); 
+plot(t, waves.eta, '-b', 'LineWidth', 2); 
+hold on;
+baseX = [ t(end)+1, t(1)-1 ];
+baseY = [ -4, -4 ];
+fill([t(1:end), baseX], [waves.eta(1:end), baseY], 'c', 'EdgeColor', 'b');
+hold off;
+xlabel('Time, s', 'FontSize', 20); ylabel('Wave Height, m', 'FontSize', 20);
+xlim([t(1), t(end)]); ylim([-3, 3]);
+set(gca,'XTickLabel',get(gca,'XTickLabel'),'fontsize',16);
+set(gca,'YTickLabel',get(gca,'YTickLabel'),'fontsize',16);
+title('Wave Height Time Series')

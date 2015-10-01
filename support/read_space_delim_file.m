@@ -4,7 +4,8 @@
 %%% This function reads in a space delimited file of all numeric data if 
 %%% the number of lines is known.  
 
-function [fileContents] = read_space_delim_file(filename,nLines)
+
+function [ fileContents ] = read_space_delim_file( filename,nLines )
 
 fid  = fopen(filename, 'r');
 format  = repmat('%f32', 1, nLines);

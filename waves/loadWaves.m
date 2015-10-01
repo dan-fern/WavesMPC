@@ -6,7 +6,7 @@
 %%% series into segments, extract Hs, Te, and other major parameters for 
 %%% each, and get anything that might be a NNet input.  Does some basic 
 %%% data checking to throw out bad points.  Thanks to Brad Ling, MIME, for 
-%%% assistance.  
+%%% assistance.  Without a proper FFT, this script is not usable.
 
 function [ waves ] = loadWaves(varargin)
 if nargin == 0

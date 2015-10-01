@@ -1,3 +1,10 @@
+%%% thresholdInput.m 
+%%% Daniel Fernández
+%%% August 2015
+%%% Limits control action so that they cannot produce values greater than
+%%% 100% thrust on the vehicle.
+
+
 function [ input1 ] = thresholdInput( input0, input1 )
 
 sharedVal = all(input0 == input1,2);

@@ -1,3 +1,12 @@
+%%% pidMoveRobot.m 
+%%% Daniel Fernández
+%%% July 2015
+%%% moves the feedback-controlled robot.  Generates control inputs based on
+%%% positional error and derivative error and along with initial position 
+%%% and all relevant DE parameters and passes them through DEs called x2dot 
+%%% and z2dot.  Gets new state and updates all errors and plotdata.
+
+
 function [ robot ] = pidMoveRobot( t, robot, spectra, count )
 
 dt = t(2) - t(1);

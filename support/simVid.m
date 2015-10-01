@@ -1,3 +1,13 @@
+%%% simVid.m 
+%%% Daniel Fernández
+%%% August 2015
+%%% Simulator support function with video; it takes in all the plot data, 
+%%% DC, time, and wave info and plots a visualization of the data.  Script
+%%% operates similarly to simulator.m except includes all videowriter
+%%% calls.  There's a decent amount of hardcoding done here and could be 
+%%% cleaner. 
+
+
 function simVid( t, eta, d, DC, plotData, movieName )
 
 dt = t(2) - t(1);

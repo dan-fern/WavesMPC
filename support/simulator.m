@@ -1,3 +1,14 @@
+%%% simulator.m 
+%%% Daniel Fernández
+%%% June 2015
+%%% Simulator support function; it takes in all the plot data, DC, time, 
+%%% and wave info and plots a visualization of the data.  tVis, swlVis,
+%%% etaVis, and everything before the main for loop is used to make the
+%%% waveform visualizations in time.  The for loop is straightforward
+%%% enough, the fill call is used to color the water. There's a decent
+%%% amount of hardcoding done here and could be cleaner. 
+
+
 function simulator( t, eta, d, DC, plotData )
 
 dt = t(2) - t(1);

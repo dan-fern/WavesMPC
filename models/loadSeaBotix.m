@@ -1,3 +1,11 @@
+%%% loadSeaBotix.m 
+%%% Daniel Fernández
+%%% June 2015
+%%% Sets up robot objects with initial/desired conditions and sea state.
+%%% Generates geometric data, and loads added mass data.  Also initializes
+%%% all error and plot matrices.
+
+
 function [ robot ] = loadSeaBotix( t, IC, DC, seaParticles )
 
 [ robot.state.px, robot.IC.px ] = deal( IC(1) );
@@ -19,8 +27,8 @@ robot.height = 0.4;
 robot.fA = degtorad(35);        %Forward Thruster Angle
 robot.aA = degtorad(45);        %Aft Thruster Angle
 robot.vA = degtorad(20);        %vertical Thruster Angle
-robot.Tmax = 30;                %max thrust per motor
-robot.mDry = 22;                %dry mass in kg in air
+robot.Tmax = 29.7;              %max thrust per motor
+robot.mDry = 21.2;              %dry mass in kg in air
 [ robot.mAdx, robot.mAdz ] = loadAddedMass( IC(2) ); %added mass for x/z
 
 robot.errors.pErrorX = robot.DC.px - robot.state.px;

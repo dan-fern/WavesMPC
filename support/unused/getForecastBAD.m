@@ -1,3 +1,16 @@
+%%% getForecastBAD.m 
+%%% Daniel Fernández
+%%% August 2015
+%%% Generates optimized set of control actions along a specified horizon.
+%%% Similar to getForecast( ) except that the structure was going to be
+%%% linewise downward.  That is as an optimized control is calculated for
+%%% the next immediate time step, it is no longer recalculated and
+%%% optimization takes place on the following time step until a vector for
+%%% the entire horizon is generated.  This was conceived to save on
+%%% calculation time.  It was never functional though, as there was a
+%%% thresholding bug that I couldn't figure out. 
+
+
 function [ u1, tCalc ] = getForecastBAD( t, robot, spectra, count, oldInput )
 
 k = 0;

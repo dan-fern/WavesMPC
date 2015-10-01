@@ -12,6 +12,7 @@
 %%% x  - 1D or 2D signal
 %%% ts - sample time (delta time)
 
+
 function [ S, F, outputArg] = spectral( x, ts )
 % Check input sizes
 if size(x,2) == 1 && size(x,1) > 1

@@ -1,3 +1,10 @@
+%%% updatePlotHistory.m 
+%%% Daniel Fernández
+%%% July 2015
+%%% Updates all plotData for robots or waves and produces data which is
+%%% immediately readable by the simulator.
+
+
 function [ plotData ] = updatePlotHistory( state, plotData, count, dt ) 
 
 plotData.px(count+dt) = state(1);

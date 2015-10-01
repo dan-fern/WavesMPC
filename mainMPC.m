@@ -1,7 +1,22 @@
 %%% tempMPC.m
 %%% Daniel Fernández
 %%% August 2015
-%%% new MPC
+%%% Launchpad for MPC controller; functions similarly to mainPID.m.  Here, 
+%%% you set your initial conditions and desired conditions.  IC and DC take 
+%%% the form C = [ posX posZ velX velZ accX accZ ].  A time object is 
+%%% loaded, as well as the waves object.  the U vector is used to update 
+%%% the initial set of plots.  oldInput is used to initialize the initial
+%%% set of control actions to be the PID control actions along the horizon.
+%%% The gWaves and gParticles infrastructure is added but commented out.
+%%% This was used to attach Gaussian noise to the the wave observations.
+%%% There was an unintended consequence here as each noisy sea state
+%%% extended calculation time significantly.  This should be addressed.  In 
+%%% the while loop, steps iterate through between getting an optimized path
+%%% and moving the robot along that path.  The oldInput recycles any unused
+%%% control inputs into the next optimization attempt to reduce calculation 
+%%% time.  Only the first control action is employed along the horizon, and
+%%% using more or all inputs to save calculation time should be explored.
+
 
 clc 
 close all
@@ -50,34 +65,12 @@ clear counter U pErrorX pErrorZ input oldInput
 %allRobots(i) = volturnus;
 %end
 
-%%
+%% Simulator easy access
 tt = t(1:numel(time.t)-time.tSteps);
 etaeta = waves.eta(1:numel(time.t)-time.tSteps);
+
+% for just the sim
 simulator( tt, etaeta, waves.d, DC, volturnus.robotPlots );
-%simVid(tt, etaeta, waves.d, DC, volturnus.robotPlots, 'MPCgauss' );
 
-temp2 = [ volturnus.errorPlots.pErrorX; volturnus.errorPlots.pErrorZ ]; 
-figure('units','normalized','outerposition',[0 0 1 1]);
-subplot(2,1,1)
-plot( t(1:numel(t)-20), temp2(1,1:numel(t)-20), 'b' ); 
-line( [t(1),t(numel(t)-20)], [0,0],'LineWidth', 1, 'Color', 'r' );
-title('Position Error, x');
-subplot(2,1,2)
-plot( t(1:numel(t)-20), temp2(2,1:numel(t)-20), 'b' );
-line( [t(1),t(numel(t)-20)], [0,0],'LineWidth', 1, 'Color', 'r' );
-title('Position Error, z');
-
-figure; plot(t, waves.eta); xlabel('time, s'); ylabel('elevation, m');
-
-figure('units','normalized','outerposition',[0 0 1 0.4]); 
-plot(t, waves.eta, '-b', 'LineWidth', 2); 
-hold on;
-baseX = [ t(end)+1, t(1)-1 ];
-baseY = [ -4, -4 ];
-fill([t(1:end), baseX], [waves.eta(1:end), baseY], 'c', 'EdgeColor', 'b');
-hold off;
-xlabel('Time, s', 'FontSize', 20); ylabel('Wave Height, m', 'FontSize', 20);
-xlim([t(1), t(end)]); ylim([-3, 3]);
-set(gca,'XTickLabel',get(gca,'XTickLabel'),'fontsize',16);
-set(gca,'YTickLabel',get(gca,'YTickLabel'),'fontsize',16);
-title('Wave Height Time Series')
+% and if you want to write a video
+simVid(tt, etaeta, waves.d, DC, volturnus.robotPlots, 'MPCgauss' );

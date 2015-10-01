@@ -1,3 +1,10 @@
+%%% loadGaussWaves.m 
+%%% Daniel Fernández
+%%% May 2015
+%%% functions similarly to loadTempWaves( ) except attaches Gaussian noise
+%%% to wave height, H, period, T, and phase, E values based on SNR values.
+
+
 function [ waves ] = loadGaussWaves( noiseH, noiseT, noiseE, count )
 
 waves = loadTempWaves( );

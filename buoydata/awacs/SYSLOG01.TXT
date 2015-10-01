@@ -1,0 +1,11 @@
+
+ProLog version: 4.13
+Hardware:       Rev B
+Serial Number:  573
+SDHC Card size: 3886 MB
+Cluster size:   32768 Bytes
+SDHC Card Product Name:     PAF SD
+SDHC Card Product Revision: 1.0
+SDHC Card Serial Number:    264b2359 (642458457)
+
+15:22:33 13/08-2013 SDHC Card erased

@@ -1,3 +1,9 @@
+%%% fourierNew.m 
+%%% Daniel Fernández, Kai Parker
+%%% June 2015
+%%% ARCHIVE: attempts at fast fourier decomposition for a real wave field.
+
+
 %% Problem 3 C
 % with pre-whitening and post-coloring with the first-difference filter
 clc 

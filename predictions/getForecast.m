@@ -1,3 +1,26 @@
+%%% getForecast.m 
+%%% Daniel Fernández
+%%% August 2015
+%%% Generates optimized set of control actions along a specified horizon.
+%%% First if statement compares whether there are recycled inputs
+%%% available. If not, then all control actions are initialized to the pd
+%%% actions along the horizon as a first guess.  If recycled inputs are
+%%% available, then those are populated as the 1st to n-1 set of actions 
+%%% with the last row populated with the pd control action.  With an
+%%% initially low delta value, the next set of control actions is perturbed
+%%% and estimated in the for loop until the actions are optimized or some
+%%% decision criterion is met.  States are estimated using the
+%%% mpcMoveRobot( ), mpcMoveRobotX( ), and mpcMoveRobotZ( ) functions using
+%%% a tempBot object predicted forward.  Estimates forward are then
+%%% estimated using the getCost( ) and getJacobian( ) functions.  If
+%%% optimized control is achieved along one axis before another, the script
+%%% will continue to optimize along the non-optimized axis only to save
+%%% computation time.  If no optimized control is achieved, the delta value
+%%% perturbs a new set of control actions and the process is repeated.  All
+%%% state estimations use the function getRobotParticles( ) to estimate the 
+%%% sea state at the current position in time and space.
+
+
 function [ u1, tCalc ] = getForecast( t, robot, spectra, count, oldInput )
 
 k = 0;

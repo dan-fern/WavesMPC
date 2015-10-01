@@ -1,8 +1,8 @@
-%%% getForces.m 
+%%% getDragForces.m 
 %%% Daniel Fernández
 %%% June 2015
-%%% takes in particle velocities and spits out instantaneous forces.
-%%% Currently only gives drag
+%%% takes in particle velocities and spits out instantaneous drag forces.
+
 
 function [ forces ] = getDragForces( t, particles, robot, rho )
 

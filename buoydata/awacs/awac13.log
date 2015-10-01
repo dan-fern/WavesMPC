@@ -1,0 +1,66 @@
+============================================================
+Deployment   : awac13
+Current time : 8/13/2013 3:29:24 PM
+Start at     : 8/14/2013 8:00:00 AM
+Comment:
+NNMREC 2013 deplpyment. Josh Baker mooring study. Deploy Aug. 14, 8am PDT. NETS
+------------------------------------------------------------
+Profile interval      (s) : 600
+Number of cells           : 60
+Cell size             (m) : 1.00
+Average interval      (s) : 60
+Blanking distance     (m) : 0.52
+Measurement load      (%) : 50
+Power level               : HIGH
+Number of wave samples    : 2400
+Wave interval         (s) : 7200
+Wave sampling rate   (Hz) : 1
+Wave AST Ice mode         : DISABLED
+Wave AST SUV mode         : DISABLED
+Compass upd. rate     (s) : 600
+Coordinate System         : ENU
+Speed of sound      (m/s) : MEASURED
+Salinity            (ppt) : 35
+Analog input 1            : NONE
+Analog input 2            : NONE
+Analog input power out    : DISABLED
+File wrapping             : OFF
+TellTale                  : OFF
+Acoustic modem            : OFF
+Serial output             : OFF
+Baud rate                 : 9600
+------------------------------------------------------------
+Onboard wave processing   : ENABLED
+Distance from bottom  (m) : 0.50
+Band separation freq (Hz) : 0.20
+Wave parameters           : ENABLED
+Wave band parameters      : ENABLED
+Energy density spectra    : ENABLED
+Fourier coefficients      : ENABLED
+Serial output             : DISABLED
+Output format             : BINARY
+------------------------------------------------------------
+Assumed duration   (days) : 49.0
+Battery utilization   (%) : 59.0
+Battery level         (V) : 13.8
+Recorder size        (MB) : 3886
+Recorder free space  (MB) : 3885.972
+Memory required      (MB) : 42.2
+Vertical vel. prec (cm/s) : 1.5
+Horizon. vel. prec (cm/s) : 4.5
+------------------------------------------------------------
+Instrument ID             : WPR 2208
+Head ID                   : WAV 6648
+Firmware version          : 3.37 WPC
+ProLog ID                 : 573
+ProLog firmware version   : 4.13
+------------------------------------------------------------
+SD Card Inserted          : YES
+SD Card Ready             : YES
+SD Card Write protected   : NO
+SD Card Type              : SDHC
+SD Card Supported         : YES
+------------------------------------------------------------
+AWAC AST Version 1.46.07
+Copyright (C) Nortek AS
+============================================================

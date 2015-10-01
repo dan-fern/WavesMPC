@@ -1,3 +1,10 @@
+%%% killWaves.m 
+%%% Daniel Fernández
+%%% July 2015
+%%% Removes wave forces in the water column.  Used for tuning controller
+%%% gains or just playing god.
+
+
 function [ spectra ] = killWaves( t, spectra, count, qualifier )
 
 if count ~= qualifier

@@ -1,3 +1,11 @@
+%%% dispersion.m 
+%%% Daniel Fernández
+%%% May 2015
+%%% Solves the dispersion relation for a given wave.  Uses symbolic toolbox
+%%% which has notable overhead.  Outputs wave frequency, w, wave length, L,
+%%% and wave number, k.
+
+
 function [ solw, solL, solk ] = dispersion( d, T, g )
 
 solw = zeros(1, numel(T)); 

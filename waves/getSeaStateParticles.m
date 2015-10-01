@@ -1,8 +1,9 @@
 %%% getSeaStateParticles.m 
 %%% Daniel Fernández
 %%% June 2015
-%%% takes in sea state and spits out summed particle velocities,
-%%% accelerations and sea state.
+%%% takes in sea state, position, and time; outputs current summed particle 
+%%% velocities and accelerations.  Classifies component waves based on
+%%% deep, intermediate, or shallow criteria.  Also plots wave profile, eta.
 
 function [ particles, spectra ] = getSeaStateParticles( t, x, z, spectra )
 
